@@ -108,7 +108,7 @@ func main() {
 
 	if !opts.noTLS && (opts.tlsCertPath == "" || opts.tlsKeyPath == "") {
 		println("Please specify a TLS certificate/key to use. You can use a self-signed certificate.")
-		println("See 'https://github.com/DenioD/lightwalletd/blob/master/README.md#running-your-own-hushlite-lightwalletd'")
+        println("See https://git.hush.is/hush/lightwalletd/src/branch/master/README.md#running-your-own-sdl-lightwalletd")
 		os.Exit(1)
 	}
 
