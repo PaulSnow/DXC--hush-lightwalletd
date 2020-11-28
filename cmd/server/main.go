@@ -15,9 +15,9 @@ import (
 	"google.golang.org/grpc/peer"
 	"google.golang.org/grpc/reflection"
 
-	"github.com/DenioD/lightwalletd/common"
-	"github.com/DenioD/lightwalletd/frontend"
-	"github.com/DenioD/lightwalletd/walletrpc"
+	"git.hush.is/hush/lightwalletd/common"
+	"git.hush.is/hush/lightwalletd/frontend"
+	"git.hush.is/hush/lightwalletd/walletrpc"
 )
 
 var log *logrus.Entry
@@ -108,7 +108,7 @@ func main() {
 
 	if !opts.noTLS && (opts.tlsCertPath == "" || opts.tlsKeyPath == "") {
 		println("Please specify a TLS certificate/key to use. You can use a self-signed certificate.")
-        println("See https://git.hush.is/hush/lightwalletd/src/branch/master/README.md#running-your-own-sdl-lightwalletd")
+		println("See https://git.hush.is/hush/lightwalletd/src/branch/master/README.md#running-your-own-sdl-lightwalletd")
 		os.Exit(1)
 	}
 
@@ -177,17 +177,17 @@ func main() {
 		}).Warn("Unable to get sapling activation height")
 	}
 
-	log.Info("Got sapling height ", saplingHeight, " chain ", chainName, " branchID ", branchID," difficulty ", difficulty,longestchain, " longestchain ",notarized," notarized ")
+	log.Info("Got sapling height ", saplingHeight, " chain ", chainName, " branchID ", branchID, " difficulty ", difficulty, longestchain, " longestchain ", notarized, " notarized ")
 
 	// Get the Coinsupply from the RPC
-	 result, coin, height, supply, zfunds, total, err := common.GetCoinsupply(rpcClient)
+	result, coin, height, supply, zfunds, total, err := common.GetCoinsupply(rpcClient)
 	if err != nil {
 		log.WithFields(logrus.Fields{
 			"error": err,
 		}).Warn("Unable to get coinsupply")
 	}
 
-	log.Info( " result ", result, " coin ", coin," height", height, "supply", supply ,"zfunds", zfunds, "total", total)
+	log.Info(" result ", result, " coin ", coin, " height", height, "supply", supply, "zfunds", zfunds, "total", total)
 
 	// Initialize the cache
 	cache := common.NewBlockCache(opts.cacheSize)

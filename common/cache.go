@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"sync"
 
-	"github.com/DenioD/lightwalletd/walletrpc"
+	"git.hush.is/hush/lightwalletd/walletrpc"
 	"github.com/golang/protobuf/proto"
 )
 
