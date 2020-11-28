@@ -9,7 +9,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/DenioD/lightwalletd/parser/internal/bytestring"
+	"git.hush.is/hush/lightwalletd/parser/internal/bytestring"
 )
 
 // "Human-readable" version of joinSplit struct defined in transaction.go.

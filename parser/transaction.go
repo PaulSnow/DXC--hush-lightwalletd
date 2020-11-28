@@ -3,9 +3,9 @@ package parser
 import (
 	"crypto/sha256"
 
+	"git.hush.is/hush/lightwalletd/parser/internal/bytestring"
+	"git.hush.is/hush/lightwalletd/walletrpc"
 	"github.com/pkg/errors"
-	"github.com/DenioD/lightwalletd/parser/internal/bytestring"
-	"github.com/DenioD/lightwalletd/walletrpc"
 )
 
 type rawTransaction struct {

@@ -1,4 +1,4 @@
-module github.com/DenioD/lightwalletd
+module git.hush.is/hush/lightwalletd
 
 go 1.12
 

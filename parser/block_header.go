@@ -7,8 +7,8 @@ import (
 	"log"
 	"math/big"
 
+	"git.hush.is/hush/lightwalletd/parser/internal/bytestring"
 	"github.com/pkg/errors"
-	"github.com/DenioD/lightwalletd/parser/internal/bytestring"
 )
 
 const (
