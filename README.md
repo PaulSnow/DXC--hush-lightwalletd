@@ -2,7 +2,7 @@
 
 Hush Lightwalletd is a fork of [lightwalletd](https://github.com/adityapk00/lightwalletd) original from Zcash (ZEC).
 
-It is a backend service that provides a bandwidth-efficient interface to the Hush blockchain for the [SilentDragonLite cli](https://github.com/MyHush/silentdragonlite-light-cli) and [SilentDragonLite](https://github.com/MyHush/SilentDragonLite)
+It is a backend service that provides a bandwidth-efficient interface to the Hush blockchain for the [SilentDragonLite cli](https://git.hush.is/hush/silentdragonlite-light-cli) and [SilentDragonLite](https://git.hush.is/hush/SilentDragonLite)
 
 ## Changes from upstream lightwalletd
 This version of lightwalletd extends lightwalletd and:
