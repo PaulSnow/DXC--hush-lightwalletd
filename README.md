@@ -18,57 +18,85 @@ This version of lightwalletd extends lightwalletd and:
 ## Running your own SDL lightwalletd
 
 #### 0. First, install Go
-
-You will need Go >= 1.13 which you can download from the official [download page](https://golang.org/dl/)
+You will need Go >= 1.13 which you can download from the official [download page](https://golang.org/dl/) or install via your OS package manager.
 
 This [installation](https://golang.org/doc/install) document shows how to do it on various OS's.
 
-[Here is a simpler guide just for Ubuntu](https://tecadmin.net/install-go-on-ubuntu/)
+If you're using Ubuntu, try:
+
+```
+$ sudo apt install golang
+```
 
 #### 1. Run a Hush node.
-Start a `hushd` with the following options:
+Either compile or build the [Hush Daemon (hushd)](https://git.hush.is/hush/hush3).
+
+Next, change your HUSH3.conf file to something like the following:
+
 ```
+rpcuser=user-CHANGETHIS
+rpcpassword=pass-CHANGETHIS
+rpcport=18031
 server=1
-rpcuser=user
-rpcpassword=password
-rpcbind=127.0.0.1
+daemon=0
 txindex=1
+rpcworkqueue=256
+rpcallowip=127.0.0.1
+rpcbind=127.0.0.1
 ```
 
-You might need to run with `-reindex` the first time if you are enabling the `txindex` or `insightexplorer` options for the first time. The reindex might take a while.
+Then start `hushd` in your command window. You might need to run with `-reindex` the first time if you are enabling the `txindex` or `insightexplorer` options for the first time. The reindex might take a while.
 
-#### 2. Get a TLS certificate
-##### "Let's Encrypt" certificate using NGINX as a reverse proxy
-If you running a public-facing server, the easiest way to obtain a certificate is to use a NGINX reverse proxy and get a Let's Encrypt certificate. [Instructions are here](https://www.nginx.com/blog/using-free-ssltls-certificates-from-lets-encrypt-with-nginx/)
+#### 2. Get a TLS certificate and run the Lightwalletd frontend
+First, get a TLS certificate:
+
+On Ubuntu Linux, **I SUGGEST YOU DO NOT USE SNAPD** and just ```sudo apt install certbot``` and then start on [Step 7 of these instructions by the EFF](https://certbot.eff.org/instructions)
+
+Next you decide how you want to setup lightwalletd - with or without NGINX.
+
+##### Option A: "Let's Encrypt" certificate using NGINX as a reverse proxy
+If you running a public-facing server, the easiest way to obtain a certificate is to use a NGINX reverse proxy and get a Let's Encrypt certificate.
 
 Create a new section for the NGINX reverse proxy:
 ```
 server {
     listen 443 ssl http2;
- 
- 
-    ssl_certificate     ssl/cert.pem; # From certbot
-    ssl_certificate_key ssl/key.pem;  # From certbot
+    listen [::]:443 ssl http2;
     
+    server_name your_host.net;
+
+    ssl_certificate /etc/letsencrypt/live/your_host.net/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/your_host.net/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+        
     location / {
         # Replace localhost:9067 with the address and port of your gRPC server if using a custom port
-        grpc_pass grpc://localhost:9067;
+    	grpc_pass grpc://your_host.net:9067;
     }
 }
 ```
 
-#### 3. Run the frontend:
-
-If you have a certificate that you want to use (from a certificate authority), pass the certificate to the frontend:
+Then run the lightwalletd frontend with the following (Note: we use the "-no-tls" option as we are using NGINX as a reverse proxy and letting it handle the TLS authentication):
 
 ```
-go run cmd/server/main.go -bind-addr 127.0.0.1:9067 -conf-file ~/.komodo/HUSH3/HUSH3.conf  -tls-cert /etc/letsencrypt/live/YOURWEBSITE/fullchain.pem -tls-key /etc/letsencrypt/live/YOURWEBSITE/privkey.pem
+$ sudo go run cmd/server/main.go -bind-addr your_host.net:9067 -conf-file ~/.komodo/HUSH3/HUSH3.conf -no-tls
 ```
 
+##### Option B: "Let's Encrypt" certificate just using lightwalletd without NGINX
+The other option is to configure lightwalletd to handle its own TLS authentication. Once you have a certificate that you want to use (from a certificate authority), pass the certificate to the frontend as follows:
+
+```
+$ sudo go run cmd/server/main.go -bind-addr 127.0.0.1:9067 -conf-file ~/.komodo/HUSH3/HUSH3.conf -tls-cert /etc/letsencrypt/live/YOURWEBSITE/fullchain.pem -tls-key /etc/letsencrypt/live/YOURWEBSITE/privkey.pem
+```
+
+#### 3. Point the `silentdragonlite-cli` to this server
 You should start seeing the frontend ingest and cache the Hush blocks after ~15 seconds. 
 
-#### 4. Point the `silentdragonlite-cli` to this server
-Connect to your server!
+Now, connect to your server! (Substitute below)
 ```
-./silentdragonlite-cli -server https://lite.hush.is
+$ git clone https://git.hush.is/hush/silentdragonlite-cli
+$ cd silentdragonlite-cli
+$ cargo build --release
+$ ./target/release/silentdragonlite-cli --server https://lite.myhush.org
 ```
