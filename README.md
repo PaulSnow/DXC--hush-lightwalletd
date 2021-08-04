@@ -95,8 +95,8 @@ You should start seeing the frontend ingest and cache the Hush blocks after ~15 
 
 Now, connect to your server! (Substitute below)
 ```
-$ git clone https://git.hush.is/hush/silentdragonlite-cli
-$ cd silentdragonlite-cli
+ git clone https://git.hush.is/hush/silentdragonlite-cli
+ cd silentdragonlite-cli
 ```
 
 ##### Install deps for cargo on VPS https://doc.rust-lang.org/cargo/getting-started/installation.html
@@ -106,6 +106,6 @@ sudo apt install -y cargo
 then
 
 ```
-$ cargo build --release
-$ ./target/release/silentdragonlite-cli --server https://lite.example.org
+ cargo build --release
+ ./target/release/silentdragonlite-cli --server https://lite.example.org
 ```
