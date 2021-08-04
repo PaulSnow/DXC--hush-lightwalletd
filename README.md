@@ -80,14 +80,14 @@ server {
 Then run the lightwalletd frontend with the following (Note: we use the "-no-tls" option as we are using NGINX as a reverse proxy and letting it handle the TLS authentication):
 
 ```
-$ go run cmd/server/main.go -bind-addr your_host.net:9067 -conf-file ~/.komodo/HUSH3/HUSH3.conf -no-tls
+ go run cmd/server/main.go -bind-addr your_host.net:9067 -conf-file ~/.komodo/HUSH3/HUSH3.conf -no-tls
 ```
 
 ##### Option B: "Let's Encrypt" certificate just using lightwalletd without NGINX
 The other option is to configure lightwalletd to handle its own TLS authentication. Once you have a certificate that you want to use (from a certificate authority), pass the certificate to the frontend as follows:
 
 ```
-$ sudo go run cmd/server/main.go -bind-addr 127.0.0.1:9067 -conf-file ~/.komodo/HUSH3/HUSH3.conf -tls-cert /etc/letsencrypt/live/YOURWEBSITE/fullchain.pem -tls-key /etc/letsencrypt/live/YOURWEBSITE/privkey.pem
+ go run cmd/server/main.go -bind-addr 127.0.0.1:9067 -conf-file ~/.komodo/HUSH3/HUSH3.conf -tls-cert /etc/letsencrypt/live/YOURWEBSITE/fullchain.pem -tls-key /etc/letsencrypt/live/YOURWEBSITE/privkey.pem
 ```
 
 #### 3. Point the `silentdragonlite-cli` to this server
@@ -101,7 +101,7 @@ $ cd silentdragonlite-cli
 
 ##### Install deps for cargo on VPS https://doc.rust-lang.org/cargo/getting-started/installation.html
 ```
-$ curl https://sh.rustup.rs -sSf | sh
+sudo apt install -y cargo
 ```
 then
 
