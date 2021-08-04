@@ -97,6 +97,15 @@ Now, connect to your server! (Substitute below)
 ```
 $ git clone https://git.hush.is/hush/silentdragonlite-cli
 $ cd silentdragonlite-cli
+```
+
+##### Install deps for cargo on VPS https://doc.rust-lang.org/cargo/getting-started/installation.html
+```
+$ curl https://sh.rustup.rs -sSf | sh
+```
+then
+
+```
 $ cargo build --release
-$ ./target/release/silentdragonlite-cli --server https://lite.myhush.org
+$ ./target/release/silentdragonlite-cli --server https://lite.example.org
 ```
