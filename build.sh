@@ -10,7 +10,8 @@ fi
 
 # now to compiling...
 cd `pwd`/cmd/server
-go build main.go
+go build -o lightwalletd main.go
 # move compiled main.go to lightwalletd
-mv main `pwd`/../../lightwalletd
-echo "lightwalletd is now compiled for you"
+mv lightwalletd `pwd`/../../lightwalletd
+echo "lightwalletd is now compiled for you."
+echo "for options, run ./lightwalletd --help"
