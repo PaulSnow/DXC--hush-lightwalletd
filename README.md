@@ -116,12 +116,12 @@ These are the current different command line options for lightwalletd:
 | CLI option | Default 		  | What it does                  |
 |------------|:--------------:|------------------------------:|
 | -bind-addr | 127.0.0.1:9069 | address and port to listen on |
-| -tls-cert  | <blank>		  | the path to a TLS certificate |
-| -tls-key   | <blank> 		  | the path to a TLS key file    |
+| -tls-cert  | blank		  | the path to a TLS certificate |
+| -tls-key   | blank 		  | the path to a TLS key file    |
 | -no-tls    | false		  | Disable TLS, serve un-encrypted traffic |
-| -log-file  | <blank> 		  | log file to write to 		  |
+| -log-file  | blank 		  | log file to write to 		  |
 | -log-level | logrus.InfoLevel | log level 1 thru 7 (something from logrus)|
-| -conf-file | <blank>		  | conf file to pull RPC creds from |
+| -conf-file | blank		  | conf file to pull RPC creds from |
 | -cache-size| 40000 		  | number of blocks to hold in the cache |
 
 ## Support
