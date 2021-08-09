@@ -109,6 +109,21 @@ cargo build --release
 
 * If you have trouble compiling silentdragonlite-cli, then [please refer to it's separate documentation here](https://git.hush.is/hush/silentdragonlite-cli) on how to build it and what pre-requisites need to be installed.
 
+## Lightwalletd Command-line Options
+
+These are the current different command line options for lightwalletd:
+
+| CLI option | Default 		  | What it does                  |
+|------------|:--------------:|------------------------------:|
+| -bind-addr | 127.0.0.1:9069 | address and port to listen on |
+| -tls-cert  | <blank>		  | the path to a TLS certificate |
+| -tls-key   | <blank> 		  | the path to a TLS key file    |
+| -no-tls    | false		  | Disable TLS, serve un-encrypted traffic |
+| -log-file  | <blank> 		  | log file to write to 		  |
+| -log-level | logrus.InfoLevel | log level 1 thru 7 (something from logrus)|
+| -conf-file | <blank>		  | conf file to pull RPC creds from |
+| -cache-size| 40000 		  | number of blocks to hold in the cache |
+
 ## Support
 For support or other questions, join us on [Telegram](https://hush.is/telegram), or tweet at [@MyHushTeam](https://twitter.com/MyHushTeam), or toot at our [Mastodon](https://fosstodon.org/@myhushteam) or join [Telegram Support](https://hush.is/telegram_support).
 
