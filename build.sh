@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Copyright 2021 The Hush Developers
 # Released under GPLv3
 
@@ -11,7 +11,6 @@ fi
 # now to compiling...
 cd `pwd`/cmd/server
 go build -o lightwalletd main.go
-# move compiled main.go to lightwalletd
 mv lightwalletd `pwd`/../../lightwalletd
 echo "lightwalletd is now compiled for you."
 echo "for options, run ./lightwalletd --help"
