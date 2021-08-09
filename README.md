@@ -2,7 +2,7 @@
 
 Hush Lightwalletd is a fork of [lightwalletd](https://github.com/adityapk00/lightwalletd) original from Zcash (ZEC).
 
-It is a backend service that provides a bandwidth-efficient interface to the Hush blockchain for the [SilentDragonLite cli](https://git.hush.is/hush/silentdragonlite-light-cli) and [SilentDragonLite](https://git.hush.is/hush/SilentDragonLite)
+It is a backend service that provides a bandwidth-efficient interface to the Hush blockchain for [SilentDragonLite cli](https://git.hush.is/hush/silentdragonlite-light-cli) and [SilentDragonLite](https://git.hush.is/hush/SilentDragonLite).
 
 ## Changes from upstream lightwalletd
 This version of lightwalletd extends lightwalletd and:
@@ -38,7 +38,6 @@ rpcuser=user-CHANGETHIS
 rpcpassword=pass-CHANGETHIS
 rpcport=18031
 server=1
-daemon=0
 txindex=1
 rpcworkqueue=256
 rpcallowip=127.0.0.1
@@ -47,12 +46,19 @@ rpcbind=127.0.0.1
 
 Then start `hushd` in your command window. You might need to run with `-reindex` the first time if you are enabling the `txindex` or `insightexplorer` options for the first time. The reindex might take a while.
 
-#### 2. Get a TLS certificate and run the Lightwalletd frontend
+#### 2. Compile lightwalletd
+Run the build script.
+
+```
+./build.sh
+```
+
+#### 3. Get a TLS certificate and run the Lightwalletd frontend
 First, get a TLS certificate:
 
 On Ubuntu Linux, **I SUGGEST YOU DO NOT USE SNAPD** and just ```sudo apt install certbot``` and then start on [Step 7 of these instructions by the EFF](https://certbot.eff.org/instructions)
 
-Next you decide how you want to setup lightwalletd - with or without NGINX.
+Next you decide how you want to setup lightwalletd - with (Option A) or without NGINX (Option B).
 
 ##### Option A: "Let's Encrypt" certificate using NGINX as a reverse proxy
 If you running a public-facing server, the easiest way to obtain a certificate is to use a NGINX reverse proxy and get a Let's Encrypt certificate.
@@ -77,35 +83,49 @@ server {
 }
 ```
 
-Then run the lightwalletd frontend with the following (Note: we use the "-no-tls" option as we are using NGINX as a reverse proxy and letting it handle the TLS authentication):
+Then run the lightwalletd frontend with the following (Note: we use the "-no-tls" option as we are using NGINX as a reverse proxy and letting it handle the TLS authentication for us instead):
 
 ```
- go run cmd/server/main.go -bind-addr your_host.net:9067 -conf-file ~/.komodo/HUSH3/HUSH3.conf -no-tls
+./lightwalletd -bind-addr your_host.net:9067 -conf-file ~/.komodo/HUSH3/HUSH3.conf -no-tls
 ```
 
 ##### Option B: "Let's Encrypt" certificate just using lightwalletd without NGINX
 The other option is to configure lightwalletd to handle its own TLS authentication. Once you have a certificate that you want to use (from a certificate authority), pass the certificate to the frontend as follows:
 
 ```
- go run cmd/server/main.go -bind-addr 127.0.0.1:9067 -conf-file ~/.komodo/HUSH3/HUSH3.conf -tls-cert /etc/letsencrypt/live/YOURWEBSITE/fullchain.pem -tls-key /etc/letsencrypt/live/YOURWEBSITE/privkey.pem
+./lightwalletd -bind-addr 127.0.0.1:9067 -conf-file ~/.komodo/HUSH3/HUSH3.conf -tls-cert /etc/letsencrypt/live/YOURWEBSITE/fullchain.pem -tls-key /etc/letsencrypt/live/YOURWEBSITE/privkey.pem
 ```
 
-#### 3. Point the `silentdragonlite-cli` to this server
+#### 4. Point the `silentdragonlite-cli` to this server
 You should start seeing the frontend ingest and cache the Hush blocks after ~15 seconds. 
 
-Now, connect to your server! (Substitute below)
+Now, connect to your server! (Substitute with your own below)
 ```
- git clone https://git.hush.is/hush/silentdragonlite-cli
- cd silentdragonlite-cli
+git clone https://git.hush.is/hush/silentdragonlite-cli
+cd silentdragonlite-cli
+cargo build --release
+./target/release/silentdragonlite-cli --server https://lite.example.org
 ```
 
-##### Install deps for cargo on VPS https://doc.rust-lang.org/cargo/getting-started/installation.html
-```
-sudo apt install -y cargo
-```
-then
+* If you have trouble compiling silentdragonlite-cli, then [please refer to it's separate documentation here](https://git.hush.is/hush/silentdragonlite-cli) on how to build it and what pre-requisites need to be installed.
 
-```
- cargo build --release
- ./target/release/silentdragonlite-cli --server https://lite.example.org
-```
+## Lightwalletd Command-line Options
+
+These are the current different command line options for lightwalletd:
+
+| CLI option | Default 		  | What it does                  |
+|------------|:--------------:|------------------------------:|
+| -bind-addr | 127.0.0.1:9069 | address and port to listen on |
+| -tls-cert  | blank		  | the path to a TLS certificate |
+| -tls-key   | blank 		  | the path to a TLS key file    |
+| -no-tls    | false		  | Disable TLS, serve un-encrypted traffic |
+| -log-file  | blank 		  | log file to write to 		  |
+| -log-level | logrus.InfoLevel | log level 1 thru 7 (something from logrus)|
+| -conf-file | blank		  | conf file to pull RPC creds from |
+| -cache-size| 40000 		  | number of blocks to hold in the cache |
+
+## Support
+For support or other questions, join us on [Telegram](https://hush.is/telegram), or tweet at [@MyHushTeam](https://twitter.com/MyHushTeam), or toot at our [Mastodon](https://fosstodon.org/@myhushteam) or join [Telegram Support](https://hush.is/telegram_support).
+
+## License
+GPLv3 or later
