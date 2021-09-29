@@ -9,6 +9,7 @@ if ! [ -x "$(command -v go)" ]; then
 fi
 
 # now to compiling...
+echo "You have go installed, so starting to compile hush lightwalletd for you..."
 cd `pwd`/cmd/server
 go build -o lightwalletd main.go
 mv lightwalletd `pwd`/../../lightwalletd
