@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"flag"
+	"fmt"
 	"net"
 	"os"
 	"os/signal"
@@ -96,6 +97,14 @@ func main() {
 	flag.StringVar(&opts.logPath, "log-file", "", "log file to write to")
 	flag.StringVar(&opts.hush3ConfPath, "conf-file", "", "conf file to pull RPC creds from")
 	flag.IntVar(&opts.cacheSize, "cache-size", 40000, "number of blocks to hold in the cache")
+
+	// creating --version so help2man will work
+	if len(os.Args) > 1 && (os.Args[1] == "--version" || os.Args[1] == "-v") {
+		// TODO find a better method than hardcode the version number here
+		fmt.Printf("hush lightwalletd version 0.1.1\n")
+		os.Exit(0)
+	}
+	// TODO determine why help2man is now complaining about --help even after I tried creating one...
 
 	// TODO prod metrics
 	// TODO support config from file and env vars

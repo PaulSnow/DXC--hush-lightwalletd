@@ -8,10 +8,22 @@ if ! [ -x "$(command -v go)" ]; then
   exit 1
 fi
 
+echo ""
+echo "Welcome to the Hush magic folks..."
+echo ""
+echo ".------..------..------..------..------..------..------..------..------..------..------..------."
+echo "|L.--. ||I.--. ||G.--. ||H.--. ||T.--. ||W.--. ||A.--. ||L.--. ||L.--. ||E.--. ||T.--. ||D.--. |"
+echo "| :/\: || (\/) || :/\: || :/\: || :/\: || :/\: || (\/) || :/\: || :/\: || (\/) || :/\: || :/\: |"
+echo "| (__) || :\/: || :\/: || (__) || (__) || :\/: || :\/: || (__) || (__) || :\/: || (__) || (__) |"
+echo "| '--'L|| '--'I|| '--'G|| '--'H|| '--'T|| '--'W|| '--'A|| '--'L|| '--'L|| '--'E|| '--'T|| '--'D|"
+echo "+------'+------'+------'+------'+------'+------'+------'+------'+------'+------'+------'+------'"
+
 # now to compiling...
+echo ""
 echo "You have go installed, so starting to compile hush lightwalletd for you..."
 cd `pwd`/cmd/server
 go build -o lightwalletd main.go
 mv lightwalletd `pwd`/../../lightwalletd
+echo ""
 echo "lightwalletd is now compiled for you."
 echo "for options, run ./lightwalletd --help"

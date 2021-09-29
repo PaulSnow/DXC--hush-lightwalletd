@@ -249,7 +249,7 @@ func (s *SqlStreamer) GetLightdInfo(ctx context.Context, in *walletrpc.Empty) (*
 	// TODO these are called Error but they aren't at the moment.
 	// A success will return code 0 and message txhash.
 	return &walletrpc.LightdInfo{
-		Version:                 "0.1-hushlightd",
+		Version:                 "0.1.1-hushlightd",
 		Vendor:                  "Silentdragonlite LightWalletD",
 		TaddrSupport:            true,
 		ChainName:               chainName,
