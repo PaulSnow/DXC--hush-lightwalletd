@@ -1,0 +1,67 @@
+.TH LIGHTWALLET "1" "October 2021" "lightwalletd v0.1.1" "User Commands"
+.SH NAME
+lightwalletd \- manual page for hush lightwalletd v0.1.1
+.SH DESCRIPTION
+.B lightwalletd
+runs a lightwallet daemon for a Hush Silent Dragon Lite node.
+.PP
+In order to ensure you are adequately protecting your privacy when using Hush,
+please see <https://hush.is/security/>.
+.SS "Usage:"
+.TP
+.B lightwalletd [options]
+Start Hush lightwalletd
+.TP
+lightwalletd --help
+List available command line options
+.TP
+lightwalletd --version
+Display version information
+.SH OPTIONS
+.HP
+\fB\-help | -h | -?
+.IP
+Display command line options
+.HP
+\fB\-conf-file\fR [conf_file location]
+.IP
+Configures your HUSH3.conf file location [Required to run]. Typically ~/.hush/HUSH3/HUSH3.conf
+.HP
+\fB\-bind-addr \fRhost.net:chosen_port
+.IP
+Set host.net to either a FQDN or 127.0.0.1 depending on your configuration [Required to run]. Most common port is 9067 unless changed.
+.HP
+\fB\-no-tls
+.IP
+Disable TLS, serve un-encrypted traffic. Toggle depending on your configuration.
+.HP
+\fB\-cache-size \fRint
+.IP
+Set number of blocks to hold in the cache (default 40000)
+.HP
+\fB\-log-file \fRstring
+.IP
+Set log file to write to
+.HP
+\fB\-log-level \fRuint
+.IP
+log level (logrus 1-7) (default 4)
+.HP
+\fB\-tls-cert \fRstring
+.IP
+the path to a TLS certificate (optional)
+.HP
+\fB\-tls-key \fRstring
+.IP
+the path to a TLS key file (optional)
+
+.SH COPYRIGHT
+In order to ensure you are adequately protecting your privacy when using Hush,
+please see <https://hush.is/security/>.
+
+Copyright (C) 2021 Jahway603 and The Hush Developers
+
+This is experimental Free Software! Fuck Yeah!!!!!
+
+Distributed under the GPLv3 software license, see the accompanying file COPYING
+or <https://www.gnu.org/licenses/gpl-3.0.en.html>.
