@@ -20,10 +20,10 @@ echo "+------'+------'+------'+------'+------'+------'+------'+------'+------'+-
 
 # now to compiling...
 echo ""
-echo "You have go installed, so starting to compile hush lightwalletd for you..."
+echo "You have go installed, so starting to compile Hush lightwalletd for you..."
 cd `pwd`/cmd/server
 go build -o lightwalletd main.go
 mv lightwalletd `pwd`/../../lightwalletd
 echo ""
-echo "lightwalletd is now compiled for you."
-echo "for options, run ./lightwalletd --help"
+echo "Hush lightwalletd is now compiled for you. Enjoy and reach out if you need support."
+echo "For options, run ./lightwalletd --help"
