@@ -91,7 +91,7 @@ func main() {
 	var version = "0.1.1" // set version number
 
 	opts := &Options{}
-	flag.StringVar(&opts.bindAddr, "bind-addr", "127.0.0.1:9069", "the address to listen on")
+	flag.StringVar(&opts.bindAddr, "bind-addr", "127.0.0.1:9067", "the address to listen on")
 	flag.StringVar(&opts.tlsCertPath, "tls-cert", "", "the path to a TLS certificate (optional)")
 	flag.StringVar(&opts.tlsKeyPath, "tls-key", "", "the path to a TLS key file (optional)")
 	flag.BoolVar(&opts.noTLS, "no-tls", false, "Disable TLS, serve un-encrypted traffic.")

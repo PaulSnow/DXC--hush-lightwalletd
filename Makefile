@@ -15,6 +15,15 @@ build:
 	# Build binary
 	./util/build.sh
 
+# Stop the hushd process in the hushdlwd container
+#docker_img_stop_hushd:
+#	docker exec -i hushdlwd hush-cli stop
+
+# Remove and delete ALL images and containers in Docker; assumes containers are stopped
+#docker_remove_all:
+#	docker system prune -f
+
 clean:
-	@echo "clean project..."
+	@echo "Cleaning project $(PROJECT_NAME) files..."
 	rm -f $(PROJECT_NAME)
+	rm -rf /tmp/$(PROJECT_NAME)-*
