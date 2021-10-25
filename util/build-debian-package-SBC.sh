@@ -15,6 +15,20 @@ if ! [ -x "$(command -v ./lightwalletd)" ]; then
   echo ""
   exit 1
 fi
+# Check if lintian is installed and exit if it is not
+if ! [ -x "$(command -v lintian)" ]; then
+  echo 'Error: lintian is not installed yet. Consult your Linux version package manager...' >&2
+  echo 'On Debian/Ubuntu, try "sudo apt install lintian"'
+  echo ""
+  exit 1
+fi
+# Check if fakeroot is installed and exit if it is not
+if ! [ -x "$(command -v fakeroot)" ]; then
+  echo 'Error: fakeroot is not installed yet. Consult your Linux version package manager...' >&2
+  echo 'On Debian/Ubuntu, try "sudo apt install fakeroot"'
+  echo ""
+  exit 1
+fi
 
 # TODO - check that the lightwalletd binary is not x86 and is actually aarch64
 
@@ -66,7 +80,7 @@ chmod 0755 -R $BUILD_DIR/*
 
 # Copy binary
 cp $SRC_PATH/lightwalletd $DEB_BIN/lightwalletd
-#strip $DEB_BIN/lightwalletd # script complained, so comment out...
+strip $DEB_BIN/lightwalletd
 cp $SRC_DEB/changelog $DEB_DOC
 cp $SRC_DEB/copyright $DEB_DOC
 cp -r $SRC_DEB/examples $DEB_DOC
@@ -79,8 +93,7 @@ gzip --best -n $DEB_MAN/lightwalletd.1
 cd $SRC_PATH/contrib
 
 # Create the control file
-# had to comment line below to move forward in this build script...
-#dpkg-shlibdeps $DEB_BIN/lightwalletd
+dpkg-shlibdeps $DEB_BIN/lightwalletd
 dpkg-gencontrol -P$BUILD_DIR -v$DEBVERSION
 
 # Create the Debian package
@@ -88,7 +101,5 @@ fakeroot dpkg-deb --build $BUILD_DIR
 cp $BUILD_PATH/$PACKAGE_NAME-$PACKAGE_VERSION-$ARCH.deb $SRC_PATH
 shasum -a 256 $SRC_PATH/$PACKAGE_NAME-$PACKAGE_VERSION-$ARCH.deb
 # Analyze with Lintian, reporting bugs and policy violations
-# Arch does not have lintian, as it's a Debian package, so commenting this out
-# To-DO - test on Debian/Ubuntu, create AUR lintian package
-#lintian -i $SRC_PATH/$PACKAGE_NAME-$PACKAGE_VERSION-$ARCH.deb
+lintian -i $SRC_PATH/$PACKAGE_NAME-$PACKAGE_VERSION-$ARCH.deb
 exit 0
