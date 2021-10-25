@@ -1,9 +1,10 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Copyright (c) 2021 The Hush developers
 # Distributed under the GPLv3 software license, see the accompanying
 # file LICENSE or https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-## Usage: ./util/build-debian-package.sh
+# Remix for SBC (Single Board Computer) like PineBook, Rock64, Raspberry Pi, etc.
+## Usage: ./util/build-debian-package-SBC.sh
 
 echo "Let's see who read the README.md or not..."
 echo ""
@@ -14,15 +15,24 @@ if ! [ -x "$(command -v ./lightwalletd)" ]; then
   echo ""
   exit 1
 fi
-
 # Check if lintian is installed and exit if it is not
-#if ! [ -x "$(command -v lintian)" ]; then
-#  echo 'Error: lintian is not installed yet. Consult your Linux version package manager...' >&2
-#  echo ""
-#  exit 1
-#fi
+if ! [ -x "$(command -v lintian)" ]; then
+  echo 'Error: lintian is not installed yet. Consult your Linux version package manager...' >&2
+  echo 'On Debian/Ubuntu, try "sudo apt install lintian"'
+  echo ""
+  exit 1
+fi
+# Check if fakeroot is installed and exit if it is not
+if ! [ -x "$(command -v fakeroot)" ]; then
+  echo 'Error: fakeroot is not installed yet. Consult your Linux version package manager...' >&2
+  echo 'On Debian/Ubuntu, try "sudo apt install fakeroot"'
+  echo ""
+  exit 1
+fi
 
-echo "Let There Be Hush Lightwalletd Debian Packages!"
+# TODO - check that the lightwalletd binary is not x86 and is actually aarch64
+
+echo "Let There Be Hush Lightwalletd Debian Packages for ARM!!!"
 echo ""
 echo "((_,...,_))"
 echo "   |o o|"
@@ -38,7 +48,7 @@ PACKAGE_NAME="lightwalletd"
 SRC_PATH=`pwd`
 SRC_DEB=$SRC_PATH/contrib/debian
 SRC_DOC=$SRC_PATH/doc
-ARCH="amd64"
+ARCH="aarch64"
 
 umask 022
 
@@ -83,8 +93,7 @@ gzip --best -n $DEB_MAN/lightwalletd.1
 cd $SRC_PATH/contrib
 
 # Create the control file
-# had to comment line below to move forward in this build script...
-#dpkg-shlibdeps $DEB_BIN/lightwalletd
+dpkg-shlibdeps $DEB_BIN/lightwalletd
 dpkg-gencontrol -P$BUILD_DIR -v$DEBVERSION
 
 # Create the Debian package
@@ -92,7 +101,5 @@ fakeroot dpkg-deb --build $BUILD_DIR
 cp $BUILD_PATH/$PACKAGE_NAME-$PACKAGE_VERSION-$ARCH.deb $SRC_PATH
 shasum -a 256 $SRC_PATH/$PACKAGE_NAME-$PACKAGE_VERSION-$ARCH.deb
 # Analyze with Lintian, reporting bugs and policy violations
-# Arch does not have lintian, as it's a Debian package, so commenting this out
-# To-DO - test on Debian/Ubuntu, create AUR lintian package
-#lintian -i $SRC_PATH/$PACKAGE_NAME-$PACKAGE_VERSION-$ARCH.deb
+lintian -i $SRC_PATH/$PACKAGE_NAME-$PACKAGE_VERSION-$ARCH.deb
 exit 0

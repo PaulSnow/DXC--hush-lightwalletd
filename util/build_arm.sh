@@ -2,8 +2,9 @@
 # Copyright 2021 The Hush Developers
 # Distributed under the GPLv3 software license, see the accompanying
 # file LICENSE or https://www.gnu.org/licenses/gpl-3.0.en.html
-
-# Purpose: Script to build Hush lightwalletd on x86 64-bit arch
+#
+# Purpose: Script to build the ARM or aarch64 architecture,
+#		which is what the PinePhone boards are running
 
 # Check if go is installed on system and exits if it is not
 if ! [ -x "$(command -v go)" ]; then
@@ -25,8 +26,9 @@ echo "+------'+------'+------'+------'+------'+------'+------'+------'+------'+-
 echo ""
 echo "You have go installed, so starting to compile Hush lightwalletd for you..."
 cd `pwd`/cmd/server
-go build -o lightwalletd main.go
+env GOOS=linux GOARCH=arm64 go build -o lightwalletd_aarch64 main.go
+mv lightwalletd_aarch64 lightwalletd
 mv lightwalletd `pwd`/../../lightwalletd
 echo ""
-echo "Hush lightwalletd is now compiled for you. Enjoy and reach out if you need support."
+echo "Hush lightwalletd is now compiled for your ARM farm or Pine Rock64. Enjoy and reach out if you need support."
 echo "For options, run ./lightwalletd --help"
