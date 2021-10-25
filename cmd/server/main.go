@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"flag"
+	"fmt"
 	"net"
 	"os"
 	"os/signal"
@@ -87,8 +88,10 @@ type Options struct {
 }
 
 func main() {
+	var version = "0.1.1" // set version number
+
 	opts := &Options{}
-	flag.StringVar(&opts.bindAddr, "bind-addr", "127.0.0.1:9069", "the address to listen on")
+	flag.StringVar(&opts.bindAddr, "bind-addr", "127.0.0.1:9067", "the address to listen on")
 	flag.StringVar(&opts.tlsCertPath, "tls-cert", "", "the path to a TLS certificate (optional)")
 	flag.StringVar(&opts.tlsKeyPath, "tls-key", "", "the path to a TLS key file (optional)")
 	flag.BoolVar(&opts.noTLS, "no-tls", false, "Disable TLS, serve un-encrypted traffic.")
@@ -96,6 +99,12 @@ func main() {
 	flag.StringVar(&opts.logPath, "log-file", "", "log file to write to")
 	flag.StringVar(&opts.hush3ConfPath, "conf-file", "", "conf file to pull RPC creds from")
 	flag.IntVar(&opts.cacheSize, "cache-size", 40000, "number of blocks to hold in the cache")
+
+	// creating --version as a requirement of help2man
+	if len(os.Args) > 1 && (os.Args[1] == "--version" || os.Args[1] == "-v") {
+		fmt.Printf("Hush lightwalletd version " + version + "\n")
+		os.Exit(0)
+	}
 
 	// TODO prod metrics
 	// TODO support config from file and env vars

@@ -22,7 +22,7 @@ You will need Go >= 1.13 which you can download from the official [download page
 
 This [installation](https://golang.org/doc/install) document shows how to do it on various OS's.
 
-If you're using Ubuntu, try:
+If you're using Ubuntu or Debian, try:
 
 ```
 $ sudo apt install golang
@@ -50,7 +50,7 @@ Then start `hushd` in your command window. You might need to run with `-reindex`
 Run the build script.
 
 ```
-./build.sh
+make build
 ```
 
 #### 3. Get a TLS certificate and run the Lightwalletd frontend
@@ -115,7 +115,7 @@ These are the current different command line options for lightwalletd:
 
 | CLI option | Default 		  | What it does                  |
 |------------|:--------------:|------------------------------:|
-| -bind-addr | 127.0.0.1:9069 | address and port to listen on |
+| -bind-addr | 127.0.0.1:9067 | address and port to listen on |
 | -tls-cert  | blank		  | the path to a TLS certificate |
 | -tls-key   | blank 		  | the path to a TLS key file    |
 | -no-tls    | false		  | Disable TLS, serve un-encrypted traffic |
