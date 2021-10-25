@@ -15,6 +15,10 @@ build:
 	# Build binary
 	./util/build.sh
 
+build-arm:
+	# Build binary for ARM architecture (aarch64)
+	./util/build_arm.sh
+
 # Stop the hushd process in the hushdlwd container
 #docker_img_stop_hushd:
 #	docker exec -i hushdlwd hush-cli stop

@@ -1,9 +1,10 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Copyright (c) 2021 The Hush developers
 # Distributed under the GPLv3 software license, see the accompanying
 # file LICENSE or https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-## Usage: ./util/build-debian-package.sh
+# Remix for SBC (Single Board Computer) like PineBook, Rock64, Raspberry Pi, etc.
+## Usage: ./util/build-debian-package-SBC.sh
 
 echo "Let's see who read the README.md or not..."
 echo ""
@@ -15,14 +16,9 @@ if ! [ -x "$(command -v ./lightwalletd)" ]; then
   exit 1
 fi
 
-# Check if lintian is installed and exit if it is not
-#if ! [ -x "$(command -v lintian)" ]; then
-#  echo 'Error: lintian is not installed yet. Consult your Linux version package manager...' >&2
-#  echo ""
-#  exit 1
-#fi
+# TODO - check that the lightwalletd binary is not x86 and is actually aarch64
 
-echo "Let There Be Hush Lightwalletd Debian Packages!"
+echo "Let There Be Hush Lightwalletd Debian Packages for ARM!!!"
 echo ""
 echo "((_,...,_))"
 echo "   |o o|"
@@ -38,7 +34,7 @@ PACKAGE_NAME="lightwalletd"
 SRC_PATH=`pwd`
 SRC_DEB=$SRC_PATH/contrib/debian
 SRC_DOC=$SRC_PATH/doc
-ARCH="amd64"
+ARCH="aarch64"
 
 umask 022
 
@@ -70,7 +66,7 @@ chmod 0755 -R $BUILD_DIR/*
 
 # Copy binary
 cp $SRC_PATH/lightwalletd $DEB_BIN/lightwalletd
-strip $DEB_BIN/lightwalletd
+#strip $DEB_BIN/lightwalletd # script complained, so comment out...
 cp $SRC_DEB/changelog $DEB_DOC
 cp $SRC_DEB/copyright $DEB_DOC
 cp -r $SRC_DEB/examples $DEB_DOC
