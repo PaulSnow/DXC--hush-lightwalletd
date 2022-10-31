@@ -125,7 +125,7 @@ These are the current different command line options for lightwalletd:
 | -cache-size| 40000 		  | number of blocks to hold in the cache |
 
 ## Support
-For support or other questions, join us on [Telegram](https://hush.is/telegram), or tweet at [@MyHushTeam](https://twitter.com/MyHushTeam), or toot at our [Mastodon](https://fosstodon.org/@myhushteam) or join [Telegram Support](https://hush.is/telegram_support).
+For support or other questions, join us on [Telegram](https://hush.is/telegram), or tweet at [@HushIsPrivacy](https://twitter.com/HushIsPrivacy), or toot at our [Mastodon](https://fosstodon.org/@myhushteam) or join [Telegram Support](https://hush.is/telegram_support).
 
 ## License
 GPLv3 or later
