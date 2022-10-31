@@ -129,3 +129,7 @@ For support or other questions, join us on [Telegram](https://hush.is/telegram),
 
 ## License
 GPLv3 or later
+
+# Copyright
+
+2016-2022 The Hush Developers
