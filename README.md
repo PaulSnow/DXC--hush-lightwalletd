@@ -78,6 +78,7 @@ server {
         
     location / {
         # Replace localhost:9067 with the address and port of your gRPC server if using a custom port
+        # Hush Smart Chains should use a different port than 9067 so it doesn't conflict with HUSH lightwalletd 
     	grpc_pass grpc://your_host.net:9067;
     }
 }
@@ -86,14 +87,14 @@ server {
 Then run the lightwalletd frontend with the following (Note: we use the "-no-tls" option as we are using NGINX as a reverse proxy and letting it handle the TLS authentication for us instead):
 
 ```
-./lightwalletd -bind-addr your_host.net:9067 -conf-file ~/.komodo/HUSH3/HUSH3.conf -no-tls
+./lightwalletd -bind-addr your_host.net:9067 -conf-file ~/.hush/HUSH3/HUSH3.conf -no-tls
 ```
 
 ##### Option B: "Let's Encrypt" certificate just using lightwalletd without NGINX
 The other option is to configure lightwalletd to handle its own TLS authentication. Once you have a certificate that you want to use (from a certificate authority), pass the certificate to the frontend as follows:
 
 ```
-./lightwalletd -bind-addr 127.0.0.1:9067 -conf-file ~/.komodo/HUSH3/HUSH3.conf -tls-cert /etc/letsencrypt/live/YOURWEBSITE/fullchain.pem -tls-key /etc/letsencrypt/live/YOURWEBSITE/privkey.pem
+./lightwalletd -bind-addr 127.0.0.1:9067 -conf-file ~/.hush/HUSH3/HUSH3.conf -tls-cert /etc/letsencrypt/live/YOURWEBSITE/fullchain.pem -tls-key /etc/letsencrypt/live/YOURWEBSITE/privkey.pem
 ```
 
 #### 4. Point the `silentdragonlite-cli` to this server
