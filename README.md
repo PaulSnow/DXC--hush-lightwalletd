@@ -125,6 +125,14 @@ These are the current different command line options for lightwalletd:
 | -conf-file | blank		  | conf file to pull RPC creds from |
 | -cache-size| 40000 		  | number of blocks to hold in the cache |
 
+## Developing
+
+To create a `foo.pb.go` file from a `foo.proto` file:
+
+```
+protoc --go_out=paths=source_relative:. foo.proto
+```
+
 ## Support
 For support or other questions, join us on [Telegram](https://hush.is/telegram), or tweet at [@HushIsPrivacy](https://twitter.com/HushIsPrivacy), or toot at our [Mastodon](https://fosstodon.org/@myhushteam) or join [Telegram Support](https://hush.is/telegram_support).
 
