@@ -19,6 +19,10 @@ build-arm:
 	# Build binary for ARM architecture (aarch64)
 	./util/build_arm.sh
 
+protobuf:
+	# Generate protobuf shizzle
+	cd walletrpc && protoc --go_out=paths=source_relative:. service.proto compact_formats.proto
+
 # Stop the hushd process in the hushdlwd container
 #docker_img_stop_hushd:
 #	docker exec -i hushdlwd hush-cli stop
