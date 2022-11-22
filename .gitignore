@@ -3,3 +3,4 @@ grpcfrontend
 cert.pem
 key.pem
 lightwalletd
+.sw?

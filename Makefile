@@ -21,7 +21,7 @@ build-arm:
 
 protobuf:
 	# Generate protobuf shizzle
-	cd walletrpc && protoc --go_out=paths=source_relative:. service.proto compact_formats.proto
+	cd walletrpc && protoc --go_out=paths=source_relative:. service.proto compact_formats.proto && protoc --go-grpc_out=paths=source_relative:. service.proto
 
 # Stop the hushd process in the hushdlwd container
 #docker_img_stop_hushd:
