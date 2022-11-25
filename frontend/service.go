@@ -225,7 +225,7 @@ func (s *lwdStreamer) GetTransaction(ctx context.Context, txf *walletrpc.TxFilte
 
 
 // GetLightdInfo gets the LightWalletD (this server) info
-/*
+/* This is the old GetLightdInfo (our fork of it) , the new GetLightdInfo is in common/common.go
 func (s *lwdStreamer) GetLightdInfo(ctx context.Context, in *walletrpc.Empty) (*walletrpc.LightdInfo, error) {
 	saplingHeight, blockHeight, chainName, consensusBranchId, difficulty, longestchain, notarized, err := common.GetSaplingInfo(s.client)
 
