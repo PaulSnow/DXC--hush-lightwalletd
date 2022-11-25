@@ -31,6 +31,12 @@ protobuf:
 #docker_remove_all:
 #	docker system prune -f
 
+dep:
+	@go get -v -d ./...
+
+vendor:
+	go mod tidy && go mod vendor
+
 clean:
 	@echo "Cleaning project $(PROJECT_NAME) files..."
 	rm -f $(PROJECT_NAME)
