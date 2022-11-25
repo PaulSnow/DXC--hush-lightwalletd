@@ -223,6 +223,11 @@ func (s *lwdStreamer) GetTransaction(ctx context.Context, txf *walletrpc.TxFilte
 	return nil, errors.New("please call GetTransaction with txid")
 }
 
+// GetLightdInfo gets the lightwalletd (this server) info, and includes information
+// it gets from its backend hushd
+func (s *lwdStreamer) GetLightdInfo(ctx context.Context, in *walletrpc.Empty) (*walletrpc.LightdInfo, error) {
+	return common.GetLightdInfo()
+}
 
 // GetLightdInfo gets the LightWalletD (this server) info
 /* This is the old GetLightdInfo (our fork of it) , the new GetLightdInfo is in common/common.go
