@@ -36,15 +36,16 @@ Next, change your HUSH3.conf file to something like the following:
 ```
 rpcuser=user-CHANGETHIS
 rpcpassword=pass-CHANGETHIS
-rpcport=18031
+rpcport=18031 # this if for HUSH, change it for other HSC's
 server=1
 txindex=1
+addressindex=1 # required for the newest lightwalletd code
 rpcworkqueue=256
 rpcallowip=127.0.0.1
 rpcbind=127.0.0.1
 ```
 
-Then start `hushd` in your command window. You might need to run with `-reindex` the first time if you are enabling the `txindex` or `insightexplorer` options for the first time. The reindex might take a while.
+Then start `hushd` in your command window. You might need to run with `-reindex` the first time if you are enabling `-addressindex` option for the first time. The reindex might take a while. A fresh sync is usually the fastest way to enable `-addressindex`, instead of doing a reindex.
 
 #### 2. Compile lightwalletd
 Run the build script.
