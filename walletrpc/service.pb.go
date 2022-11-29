@@ -1294,7 +1294,7 @@ var file_service_proto_rawDesc = []byte{
 	0x73, 0x68, 0x2e, 0x7a, 0x2e, 0x77, 0x61, 0x6c, 0x6c, 0x65, 0x74, 0x2e, 0x73, 0x64, 0x6b, 0x2e,
 	0x72, 0x70, 0x63, 0x2e, 0x47, 0x65, 0x74, 0x41, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x55, 0x74,
 	0x78, 0x6f, 0x73, 0x52, 0x65, 0x70, 0x6c, 0x79, 0x52, 0x0c, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73,
-	0x73, 0x55, 0x74, 0x78, 0x6f, 0x73, 0x32, 0xa0, 0x0b, 0x0a, 0x11, 0x43, 0x6f, 0x6d, 0x70, 0x61,
+	0x73, 0x55, 0x74, 0x78, 0x6f, 0x73, 0x32, 0xf4, 0x0b, 0x0a, 0x11, 0x43, 0x6f, 0x6d, 0x70, 0x61,
 	0x63, 0x74, 0x54, 0x78, 0x53, 0x74, 0x72, 0x65, 0x61, 0x6d, 0x65, 0x72, 0x12, 0x54, 0x0a, 0x0e,
 	0x47, 0x65, 0x74, 0x4c, 0x61, 0x74, 0x65, 0x73, 0x74, 0x42, 0x6c, 0x6f, 0x63, 0x6b, 0x12, 0x20,
 	0x2e, 0x63, 0x61, 0x73, 0x68, 0x2e, 0x7a, 0x2e, 0x77, 0x61, 0x6c, 0x6c, 0x65, 0x74, 0x2e, 0x73,
@@ -1384,8 +1384,14 @@ var file_service_proto_rawDesc = []byte{
 	0x77, 0x61, 0x6c, 0x6c, 0x65, 0x74, 0x2e, 0x73, 0x64, 0x6b, 0x2e, 0x72, 0x70, 0x63, 0x2e, 0x45,
 	0x6d, 0x70, 0x74, 0x79, 0x1a, 0x21, 0x2e, 0x63, 0x61, 0x73, 0x68, 0x2e, 0x7a, 0x2e, 0x77, 0x61,
 	0x6c, 0x6c, 0x65, 0x74, 0x2e, 0x73, 0x64, 0x6b, 0x2e, 0x72, 0x70, 0x63, 0x2e, 0x4c, 0x69, 0x67,
-	0x68, 0x74, 0x64, 0x49, 0x6e, 0x66, 0x6f, 0x22, 0x00, 0x42, 0x0b, 0x5a, 0x09, 0x77, 0x61, 0x6c,
-	0x6c, 0x65, 0x74, 0x72, 0x70, 0x63, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x68, 0x74, 0x64, 0x49, 0x6e, 0x66, 0x6f, 0x22, 0x00, 0x12, 0x52, 0x0a, 0x0d, 0x47, 0x65, 0x74,
+	0x43, 0x6f, 0x69, 0x6e, 0x73, 0x75, 0x70, 0x70, 0x6c, 0x79, 0x12, 0x1c, 0x2e, 0x63, 0x61, 0x73,
+	0x68, 0x2e, 0x7a, 0x2e, 0x77, 0x61, 0x6c, 0x6c, 0x65, 0x74, 0x2e, 0x73, 0x64, 0x6b, 0x2e, 0x72,
+	0x70, 0x63, 0x2e, 0x45, 0x6d, 0x70, 0x74, 0x79, 0x1a, 0x21, 0x2e, 0x63, 0x61, 0x73, 0x68, 0x2e,
+	0x7a, 0x2e, 0x77, 0x61, 0x6c, 0x6c, 0x65, 0x74, 0x2e, 0x73, 0x64, 0x6b, 0x2e, 0x72, 0x70, 0x63,
+	0x2e, 0x43, 0x6f, 0x69, 0x6e, 0x73, 0x75, 0x70, 0x70, 0x6c, 0x79, 0x22, 0x00, 0x42, 0x0b, 0x5a,
+	0x09, 0x77, 0x61, 0x6c, 0x6c, 0x65, 0x74, 0x72, 0x70, 0x63, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74,
+	0x6f, 0x33,
 }
 
 var (
@@ -1445,23 +1451,25 @@ var file_service_proto_depIdxs = []int32{
 	16, // 17: cash.z.wallet.sdk.rpc.CompactTxStreamer.GetAddressUtxos:input_type -> cash.z.wallet.sdk.rpc.GetAddressUtxosArg
 	16, // 18: cash.z.wallet.sdk.rpc.CompactTxStreamer.GetAddressUtxosStream:input_type -> cash.z.wallet.sdk.rpc.GetAddressUtxosArg
 	6,  // 19: cash.z.wallet.sdk.rpc.CompactTxStreamer.GetLightdInfo:input_type -> cash.z.wallet.sdk.rpc.Empty
-	0,  // 20: cash.z.wallet.sdk.rpc.CompactTxStreamer.GetLatestBlock:output_type -> cash.z.wallet.sdk.rpc.BlockID
-	19, // 21: cash.z.wallet.sdk.rpc.CompactTxStreamer.GetBlock:output_type -> cash.z.wallet.sdk.rpc.CompactBlock
-	19, // 22: cash.z.wallet.sdk.rpc.CompactTxStreamer.GetBlockRange:output_type -> cash.z.wallet.sdk.rpc.CompactBlock
-	3,  // 23: cash.z.wallet.sdk.rpc.CompactTxStreamer.GetTransaction:output_type -> cash.z.wallet.sdk.rpc.RawTransaction
-	4,  // 24: cash.z.wallet.sdk.rpc.CompactTxStreamer.SendTransaction:output_type -> cash.z.wallet.sdk.rpc.SendResponse
-	3,  // 25: cash.z.wallet.sdk.rpc.CompactTxStreamer.GetTaddressTxids:output_type -> cash.z.wallet.sdk.rpc.RawTransaction
-	13, // 26: cash.z.wallet.sdk.rpc.CompactTxStreamer.GetTaddressBalance:output_type -> cash.z.wallet.sdk.rpc.Balance
-	13, // 27: cash.z.wallet.sdk.rpc.CompactTxStreamer.GetTaddressBalanceStream:output_type -> cash.z.wallet.sdk.rpc.Balance
-	20, // 28: cash.z.wallet.sdk.rpc.CompactTxStreamer.GetMempoolTx:output_type -> cash.z.wallet.sdk.rpc.CompactTx
-	3,  // 29: cash.z.wallet.sdk.rpc.CompactTxStreamer.GetMempoolStream:output_type -> cash.z.wallet.sdk.rpc.RawTransaction
-	15, // 30: cash.z.wallet.sdk.rpc.CompactTxStreamer.GetTreeState:output_type -> cash.z.wallet.sdk.rpc.TreeState
-	15, // 31: cash.z.wallet.sdk.rpc.CompactTxStreamer.GetLatestTreeState:output_type -> cash.z.wallet.sdk.rpc.TreeState
-	18, // 32: cash.z.wallet.sdk.rpc.CompactTxStreamer.GetAddressUtxos:output_type -> cash.z.wallet.sdk.rpc.GetAddressUtxosReplyList
-	17, // 33: cash.z.wallet.sdk.rpc.CompactTxStreamer.GetAddressUtxosStream:output_type -> cash.z.wallet.sdk.rpc.GetAddressUtxosReply
-	7,  // 34: cash.z.wallet.sdk.rpc.CompactTxStreamer.GetLightdInfo:output_type -> cash.z.wallet.sdk.rpc.LightdInfo
-	20, // [20:35] is the sub-list for method output_type
-	5,  // [5:20] is the sub-list for method input_type
+	6,  // 20: cash.z.wallet.sdk.rpc.CompactTxStreamer.GetCoinsupply:input_type -> cash.z.wallet.sdk.rpc.Empty
+	0,  // 21: cash.z.wallet.sdk.rpc.CompactTxStreamer.GetLatestBlock:output_type -> cash.z.wallet.sdk.rpc.BlockID
+	19, // 22: cash.z.wallet.sdk.rpc.CompactTxStreamer.GetBlock:output_type -> cash.z.wallet.sdk.rpc.CompactBlock
+	19, // 23: cash.z.wallet.sdk.rpc.CompactTxStreamer.GetBlockRange:output_type -> cash.z.wallet.sdk.rpc.CompactBlock
+	3,  // 24: cash.z.wallet.sdk.rpc.CompactTxStreamer.GetTransaction:output_type -> cash.z.wallet.sdk.rpc.RawTransaction
+	4,  // 25: cash.z.wallet.sdk.rpc.CompactTxStreamer.SendTransaction:output_type -> cash.z.wallet.sdk.rpc.SendResponse
+	3,  // 26: cash.z.wallet.sdk.rpc.CompactTxStreamer.GetTaddressTxids:output_type -> cash.z.wallet.sdk.rpc.RawTransaction
+	13, // 27: cash.z.wallet.sdk.rpc.CompactTxStreamer.GetTaddressBalance:output_type -> cash.z.wallet.sdk.rpc.Balance
+	13, // 28: cash.z.wallet.sdk.rpc.CompactTxStreamer.GetTaddressBalanceStream:output_type -> cash.z.wallet.sdk.rpc.Balance
+	20, // 29: cash.z.wallet.sdk.rpc.CompactTxStreamer.GetMempoolTx:output_type -> cash.z.wallet.sdk.rpc.CompactTx
+	3,  // 30: cash.z.wallet.sdk.rpc.CompactTxStreamer.GetMempoolStream:output_type -> cash.z.wallet.sdk.rpc.RawTransaction
+	15, // 31: cash.z.wallet.sdk.rpc.CompactTxStreamer.GetTreeState:output_type -> cash.z.wallet.sdk.rpc.TreeState
+	15, // 32: cash.z.wallet.sdk.rpc.CompactTxStreamer.GetLatestTreeState:output_type -> cash.z.wallet.sdk.rpc.TreeState
+	18, // 33: cash.z.wallet.sdk.rpc.CompactTxStreamer.GetAddressUtxos:output_type -> cash.z.wallet.sdk.rpc.GetAddressUtxosReplyList
+	17, // 34: cash.z.wallet.sdk.rpc.CompactTxStreamer.GetAddressUtxosStream:output_type -> cash.z.wallet.sdk.rpc.GetAddressUtxosReply
+	7,  // 35: cash.z.wallet.sdk.rpc.CompactTxStreamer.GetLightdInfo:output_type -> cash.z.wallet.sdk.rpc.LightdInfo
+	8,  // 36: cash.z.wallet.sdk.rpc.CompactTxStreamer.GetCoinsupply:output_type -> cash.z.wallet.sdk.rpc.Coinsupply
+	21, // [21:37] is the sub-list for method output_type
+	5,  // [5:21] is the sub-list for method input_type
 	5,  // [5:5] is the sub-list for extension type_name
 	5,  // [5:5] is the sub-list for extension extendee
 	0,  // [0:5] is the sub-list for field type_name

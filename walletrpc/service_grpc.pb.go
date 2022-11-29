@@ -55,6 +55,9 @@ type CompactTxStreamerClient interface {
 	GetAddressUtxosStream(ctx context.Context, in *GetAddressUtxosArg, opts ...grpc.CallOption) (CompactTxStreamer_GetAddressUtxosStreamClient, error)
 	// Return information about this lightwalletd instance and the blockchain
 	GetLightdInfo(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*LightdInfo, error)
+	// Testing-only, requires lightwalletd --ping-very-insecure (do not enable in production)
+	// rpc Ping(Duration) returns (PingResponse) {}
+	GetCoinsupply(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*Coinsupply, error)
 }
 
 type compactTxStreamerClient struct {
@@ -340,6 +343,15 @@ func (c *compactTxStreamerClient) GetLightdInfo(ctx context.Context, in *Empty, 
 	return out, nil
 }
 
+func (c *compactTxStreamerClient) GetCoinsupply(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*Coinsupply, error) {
+	out := new(Coinsupply)
+	err := c.cc.Invoke(ctx, "/cash.z.wallet.sdk.rpc.CompactTxStreamer/GetCoinsupply", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // CompactTxStreamerServer is the server API for CompactTxStreamer service.
 // All implementations must embed UnimplementedCompactTxStreamerServer
 // for forward compatibility
@@ -381,6 +393,9 @@ type CompactTxStreamerServer interface {
 	GetAddressUtxosStream(*GetAddressUtxosArg, CompactTxStreamer_GetAddressUtxosStreamServer) error
 	// Return information about this lightwalletd instance and the blockchain
 	GetLightdInfo(context.Context, *Empty) (*LightdInfo, error)
+	// Testing-only, requires lightwalletd --ping-very-insecure (do not enable in production)
+	// rpc Ping(Duration) returns (PingResponse) {}
+	GetCoinsupply(context.Context, *Empty) (*Coinsupply, error)
 	mustEmbedUnimplementedCompactTxStreamerServer()
 }
 
@@ -432,6 +447,9 @@ func (UnimplementedCompactTxStreamerServer) GetAddressUtxosStream(*GetAddressUtx
 }
 func (UnimplementedCompactTxStreamerServer) GetLightdInfo(context.Context, *Empty) (*LightdInfo, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetLightdInfo not implemented")
+}
+func (UnimplementedCompactTxStreamerServer) GetCoinsupply(context.Context, *Empty) (*Coinsupply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetCoinsupply not implemented")
 }
 func (UnimplementedCompactTxStreamerServer) mustEmbedUnimplementedCompactTxStreamerServer() {}
 
@@ -739,6 +757,24 @@ func _CompactTxStreamer_GetLightdInfo_Handler(srv interface{}, ctx context.Conte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _CompactTxStreamer_GetCoinsupply_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Empty)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CompactTxStreamerServer).GetCoinsupply(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cash.z.wallet.sdk.rpc.CompactTxStreamer/GetCoinsupply",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CompactTxStreamerServer).GetCoinsupply(ctx, req.(*Empty))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // CompactTxStreamer_ServiceDesc is the grpc.ServiceDesc for CompactTxStreamer service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -781,6 +817,10 @@ var CompactTxStreamer_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetLightdInfo",
 			Handler:    _CompactTxStreamer_GetLightdInfo_Handler,
+		},
+		{
+			MethodName: "GetCoinsupply",
+			Handler:    _CompactTxStreamer_GetCoinsupply_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{
