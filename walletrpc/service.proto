@@ -167,4 +167,5 @@ service CompactTxStreamer {
     rpc GetLightdInfo(Empty) returns (LightdInfo) {}
     // Testing-only, requires lightwalletd --ping-very-insecure (do not enable in production)
     // rpc Ping(Duration) returns (PingResponse) {}
+    rpc GetCoinsupply(Empty) returns (Coinsupply) {}
 }
