@@ -12,7 +12,6 @@ import (
 
 	"git.hush.is/hush/lightwalletd/parser"
 	"git.hush.is/hush/lightwalletd/walletrpc"
-	"github.com/btcsuite/btcd/rpcclient"
 	"github.com/pkg/errors"
 	"github.com/sirupsen/logrus"
 )
@@ -157,7 +156,9 @@ type (
 	}
 )
 
-func GetSaplingInfo(rpcClient *rpcclient.Client) (int, int, string, string, int, int, int, error) {
+//TODO: this function is not currently used, but some of it's code
+// needs to be implemented elsewhere
+func GetSaplingInfo() (int, int, string, string, int, int, int, error) {
 	result, rpcErr := RawRequest("getblockchaininfo", []json.RawMessage{})
 
 	var err error
@@ -241,6 +242,7 @@ func GetLightdInfo() (*walletrpc.LightdInfo, error) {
 		//HushdBuild:              getinfoReply.Build,
 		//HushSubversion:          getinfoReply.Subversion,
         // TODO: get notarized key
+        // TODO: longestchain
 		Notarized:               uint64(0),
 	}, nil
 }
@@ -285,7 +287,7 @@ func GetBlockChainInfo() (*HushdRpcReplyGetblockchaininfo, error) {
 	return &getblockchaininfoReply, nil
 }
 
-func GetCoinsupply(rpcClient *rpcclient.Client) (string, string, int, int, int, int, error) {
+func GetCoinsupply() (string, string, int, int, int, int, error) {
 	result1, rpcErr := RawRequest("coinsupply", []json.RawMessage{})
 
 	var err error

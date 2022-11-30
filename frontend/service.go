@@ -234,38 +234,10 @@ func (s *lwdStreamer) GetLightdInfo(ctx context.Context, in *walletrpc.Empty) (*
 	return common.GetLightdInfo()
 }
 
-// GetLightdInfo gets the LightWalletD (this server) info
-/* This is the old GetLightdInfo (our fork of it) , the new GetLightdInfo is in common/common.go
-func (s *lwdStreamer) GetLightdInfo(ctx context.Context, in *walletrpc.Empty) (*walletrpc.LightdInfo, error) {
-	saplingHeight, blockHeight, chainName, consensusBranchId, difficulty, longestchain, notarized, err := common.GetSaplingInfo(s.client)
-
-	if err != nil {
-		s.log.WithFields(logrus.Fields{
-			"error": err,
-		}).Warn("Unable to get sapling activation height")
-		return nil, err
-	}
-
-	// TODO these are called Error but they aren't at the moment.
-	// A success will return code 0 and message txhash.
-	return &walletrpc.LightdInfo{
-		Version:                 "0.1.2-hushlightd",
-		Vendor:                  "Hush lightwalletd",
-		TaddrSupport:            true,
-		ChainName:               chainName,
-		SaplingActivationHeight: uint64(saplingHeight),
-		ConsensusBranchId:       consensusBranchId,
-		BlockHeight:             uint64(blockHeight),
-		Difficulty:              uint64(difficulty),
-		Longestchain:            uint64(longestchain),
-		Notarized:               uint64(notarized),
-	}, nil
-}
-*/
 
 // GetCoinsupply gets the Coinsupply  info
 func (s *lwdStreamer) GetCoinsupply(ctx context.Context, in *walletrpc.Empty) (*walletrpc.Coinsupply, error) {
-	result, coin, height, supply, zfunds, total, err := common.GetCoinsupply(s.client)
+	result, coin, height, supply, zfunds, total, err := common.GetCoinsupply()
 
 	if err != nil {
 		s.log.WithFields(logrus.Fields{
