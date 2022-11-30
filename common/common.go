@@ -158,7 +158,7 @@ type (
 )
 
 func GetSaplingInfo(rpcClient *rpcclient.Client) (int, int, string, string, int, int, int, error) {
-	result, rpcErr := rpcClient.RawRequest("getblockchaininfo", make([]json.RawMessage, 0))
+	result, rpcErr := RawRequest("getblockchaininfo", []json.RawMessage{})
 
 	var err error
 	var errCode int64
@@ -286,7 +286,7 @@ func GetBlockChainInfo() (*HushdRpcReplyGetblockchaininfo, error) {
 }
 
 func GetCoinsupply(rpcClient *rpcclient.Client) (string, string, int, int, int, int, error) {
-	result1, rpcErr := rpcClient.RawRequest("coinsupply", make([]json.RawMessage, 0))
+	result1, rpcErr := RawRequest("coinsupply", []json.RawMessage{})
 
 	var err error
 	var errCode int64
