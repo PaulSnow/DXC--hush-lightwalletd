@@ -135,6 +135,8 @@ service CompactTxStreamer {
 
     // Return the txids corresponding to the given t-address within the given block range
     rpc GetTaddressTxids(TransparentAddressBlockFilter) returns (stream RawTransaction) {}
+    // wrapper for GetTaddressTxids
+    rpc GetAddressTxids(TransparentAddressBlockFilter) returns (stream RawTransaction) {}
     rpc GetTaddressBalance(AddressList) returns (Balance) {}
     rpc GetTaddressBalanceStream(stream Address) returns (Balance) {}
 

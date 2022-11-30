@@ -126,6 +126,11 @@ func (s *lwdStreamer) GetTaddressTxids(addressBlockFilter *walletrpc.Transparent
 	return nil
 }
 
+// this is the old name of GetTaddressTxids to provide backcompat to old clients
+func (s *lwdStreamer) GetAddressTxids(addressBlockFilter *walletrpc.TransparentAddressBlockFilter, resp walletrpc.CompactTxStreamer_GetAddressTxidsServer) error {
+    return s.GetTaddressTxids(addressBlockFilter, resp)
+}
+
 // GetBlock returns the compact block at the requested height. Requesting a
 // block by hash is not yet supported.
 func (s *lwdStreamer) GetBlock(ctx context.Context, id *walletrpc.BlockID) (*walletrpc.CompactBlock, error) {
