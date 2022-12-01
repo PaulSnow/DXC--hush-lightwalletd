@@ -54,7 +54,7 @@ var rootCmd = &cobra.Command{
 			RPCPassword:         viper.GetString("rpcpassword"),
 			RPCHost:             viper.GetString("rpchost"),
 			RPCPort:             viper.GetString("rpcport"),
-			NoTLSVeryInsecure:   viper.GetBool("no-tls-very-insecure"),
+			NoTLS:               viper.GetBool("no-tls"),
 			GenCertVeryInsecure: viper.GetBool("gen-cert-very-insecure"),
 			DataDir:             viper.GetString("data-dir"),
 			Redownload:          viper.GetBool("redownload"),
@@ -75,9 +75,8 @@ var rootCmd = &cobra.Command{
 		if /* !opts.Darkside && */ (opts.RPCUser == "" || opts.RPCPassword == "" || opts.RPCHost == "" || opts.RPCPort == "") {
 			filesThatShouldExist = append(filesThatShouldExist, opts.HushConfPath)
 		}
-		if !opts.NoTLSVeryInsecure && !opts.GenCertVeryInsecure {
-			filesThatShouldExist = append(filesThatShouldExist,
-				opts.TLSCertPath, opts.TLSKeyPath)
+		if !opts.NoTLS && !opts.GenCertVeryInsecure {
+			filesThatShouldExist = append(filesThatShouldExist, opts.TLSCertPath, opts.TLSKeyPath)
 		}
 
 		for _, filename := range filesThatShouldExist {
@@ -132,9 +131,9 @@ func startServer(opts *common.Options) error {
 	// gRPC initialization
 	var server *grpc.Server
 
-	if opts.NoTLSVeryInsecure {
-		common.Log.Warningln("Starting insecure no-TLS (plaintext) server")
-		fmt.Println("Starting insecure server")
+	if opts.NoTLS {
+		common.Log.Warningln("Starting no-TLS (plaintext) server")
+		fmt.Println("Starting lightwalletd server")
 		server = grpc.NewServer(
 			grpc.StreamInterceptor(
 				grpc_middleware.ChainStreamServer(
@@ -330,7 +329,7 @@ func init() {
 	rootCmd.Flags().String("rpcpassword", "", "RPC password")
 	rootCmd.Flags().String("rpchost", "", "RPC host")
 	rootCmd.Flags().String("rpcport", "", "RPC host port")
-	rootCmd.Flags().Bool("no-tls-very-insecure", false, "run without TLS, only safe if a reverse proxy like nginx does TLS on localhost")
+	rootCmd.Flags().Bool("no-tls", false, "run without TLS, only safe if a reverse proxy like nginx does TLS on localhost")
 	rootCmd.Flags().Bool("gen-cert-very-insecure", false, "run with self-signed TLS certificate, only for debugging, DO NOT use in production")
 	rootCmd.Flags().Bool("redownload", false, "re-fetch all blocks from hushd; reinitialize local cache files")
 	rootCmd.Flags().Int("sync-from-height", -1, "re-fetch blocks from hushd start at this height")
@@ -359,8 +358,8 @@ func init() {
 	viper.BindPFlag("rpcpassword", rootCmd.Flags().Lookup("rpcpassword"))
 	viper.BindPFlag("rpchost", rootCmd.Flags().Lookup("rpchost"))
 	viper.BindPFlag("rpcport", rootCmd.Flags().Lookup("rpcport"))
-	viper.BindPFlag("no-tls-very-insecure", rootCmd.Flags().Lookup("no-tls-very-insecure"))
-	viper.SetDefault("no-tls-very-insecure", false)
+	viper.BindPFlag("no-tls", rootCmd.Flags().Lookup("no-tls"))
+	viper.SetDefault("no-tls", false)
 	viper.BindPFlag("gen-cert-very-insecure", rootCmd.Flags().Lookup("gen-cert-very-insecure"))
 	viper.SetDefault("gen-cert-very-insecure", false)
 	viper.BindPFlag("redownload", rootCmd.Flags().Lookup("redownload"))
