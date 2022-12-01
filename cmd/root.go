@@ -330,7 +330,7 @@ func init() {
 	rootCmd.Flags().String("rpcpassword", "", "RPC password")
 	rootCmd.Flags().String("rpchost", "", "RPC host")
 	rootCmd.Flags().String("rpcport", "", "RPC host port")
-	rootCmd.Flags().Bool("no-tls-very-insecure", false, "run without the required TLS certificate, only for debugging, DO NOT use in production")
+	rootCmd.Flags().Bool("no-tls-very-insecure", false, "run without TLS, only safe if a reverse proxy like nginx does TLS on localhost")
 	rootCmd.Flags().Bool("gen-cert-very-insecure", false, "run with self-signed TLS certificate, only for debugging, DO NOT use in production")
 	rootCmd.Flags().Bool("redownload", false, "re-fetch all blocks from hushd; reinitialize local cache files")
 	rootCmd.Flags().Int("sync-from-height", -1, "re-fetch blocks from hushd start at this height")
