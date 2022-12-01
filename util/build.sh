@@ -12,6 +12,15 @@ if ! [ -x "$(command -v go)" ]; then
   exit 1
 fi
 
+# Check for correct version of go installed on system and exits if it is not
+GO_VERSION=`go version | { read _ _ v _; echo ${v#go}; }`
+GO_VERSION_MAJOR=$(echo $GO_VERSION | cut -d. -f1)
+GO_VERSION_MINOR=$(echo $GO_VERSION | cut -d. -f2)
+if [[ "$GO_VERSION_MINOR" -lt 17 ]]; then
+  echo 'Error: go version 1.17 or greater is required to build lightwallted & that is not installed. Install the correct version and try again.' >&2
+  exit 1
+fi
+
 echo ""
 echo "Welcome to the Hush magic folks..."
 echo ""
@@ -24,7 +33,7 @@ echo "+------'+------'+------'+------'+------'+------'+------'+------'+------'+-
 
 # now to compiling...
 echo ""
-echo "You have go installed, so starting to compile Hush lightwalletd for you..."
+echo "You have the correct version of go installed, so starting to compile Hush lightwalletd for you..."
 go build -o lightwalletd main.go
 echo ""
 echo "Hush lightwalletd is now compiled for you. Enjoy and reach out if you need support."
