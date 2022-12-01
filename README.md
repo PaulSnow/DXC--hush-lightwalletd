@@ -51,7 +51,7 @@ Then start `hushd` in your command window. You might need to run with `-reindex`
 Run the build script.
 
 ```
-make build
+make
 ```
 
 #### 3. Get a TLS certificate and run the Lightwalletd frontend
@@ -86,17 +86,20 @@ server {
 }
 ```
 
-Then run the lightwalletd frontend with the following (Note: we use the "-no-tls" option as we are using NGINX as a reverse proxy and letting it handle the TLS authentication for us instead):
+Then run the lightwalletd frontend with the following:
 
 ```
-./lightwalletd -bind-addr localhost:9067 -conf-file ~/.hush/HUSH3/HUSH3.conf -no-tls
+./start.sh
 ```
+
+Note: we use the "--no-tls" option as we are using NGINX as a reverse proxy and letting it handle the TLS authentication for us instead. If you want to do TLS directly with lightwalletd with no reverse proxy, see the next section.
+
 
 ##### Option B: "Let's Encrypt" certificate just using lightwalletd without NGINX
 The other option is to configure lightwalletd to handle its own TLS authentication. Once you have a certificate that you want to use (from a certificate authority), pass the certificate to the frontend as follows:
 
 ```
-./lightwalletd -bind-addr 127.0.0.1:9067 -conf-file ~/.hush/HUSH3/HUSH3.conf -tls-cert /etc/letsencrypt/live/YOURWEBSITE/fullchain.pem -tls-key /etc/letsencrypt/live/YOURWEBSITE/privkey.pem
+./start-tls.sh -tls-cert /etc/letsencrypt/live/YOURWEBSITE/fullchain.pem -tls-key /etc/letsencrypt/live/YOURWEBSITE/privkey.pem
 ```
 
 #### 4. Point the `silentdragonlite-cli` to this server
@@ -114,18 +117,22 @@ cargo build --release
 
 ## Lightwalletd Command-line Options
 
-These are the current different command line options for lightwalletd:
+These are some of the most used command line options for lightwalletd:
 
-| CLI option | Default 		  | What it does                  |
+
+| CLI option | Default                   | What it does                  |
 |------------|:--------------:|------------------------------:|
-| -bind-addr | 127.0.0.1:9067 | address and port to listen on |
-| -tls-cert  | blank		  | the path to a TLS certificate |
-| -tls-key   | blank 		  | the path to a TLS key file    |
-| -no-tls    | false		  | Disable TLS, serve un-encrypted traffic |
-| -log-file  | blank 		  | log file to write to 		  |
-| -log-level | logrus.InfoLevel | log level 1 thru 7 (something from logrus)|
-| -conf-file | blank		  | conf file to pull RPC creds from |
-| -cache-size| 40000 		  | number of blocks to hold in the cache |
+| --grpc-bind-addr | 127.0.0.1:9067 | address and port to listen on |
+| --tls-cert  | blank             | the path to a TLS certificate |
+| --tls-key   | blank             | the path to a TLS key file    |
+| --no-tls    | false             | Disable TLS, serve un-encrypted traffic |
+| --log-file  | blank             | log file to write to                  |
+| --log-level | logrus.InfoLevel | log level 1 thru 7 (something from logrus)|
+| --hush-conf-path | blank             | conf file to pull RPC creds from |
+| --cache-size| 40000             | number of blocks to hold in the cache |
+
+
+Run `./lightwalletd --help` to see all options.
 
 ## Developing
 

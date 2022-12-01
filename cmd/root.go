@@ -335,8 +335,8 @@ func init() {
 	rootCmd.Flags().Int("sync-from-height", -1, "re-fetch blocks from hushd start at this height")
 	rootCmd.Flags().String("data-dir", "/var/lib/lightwalletd", "data directory (such as db)")
 	rootCmd.Flags().Bool("ping-very-insecure", false, "allow Ping GRPC for testing")
-	rootCmd.Flags().Bool("darkside-very-insecure", false, "run with GRPC-controllable mock hushd for integration testing (shuts down after 30 minutes)")
-	rootCmd.Flags().Int("darkside-timeout", 30, "override 30 minute default darkside timeout")
+	// rootCmd.Flags().Bool("darkside-very-insecure", false, "run with GRPC-controllable mock hushd for integration testing (shuts down after 30 minutes)")
+	// rootCmd.Flags().Int("darkside-timeout", 30, "override 30 minute default darkside timeout")
 
 	viper.BindPFlag("grpc-bind-addr", rootCmd.Flags().Lookup("grpc-bind-addr"))
 	viper.SetDefault("grpc-bind-addr", "127.0.0.1:9067")
@@ -370,10 +370,10 @@ func init() {
 	viper.SetDefault("data-dir", "/var/lib/lightwalletd")
 	viper.BindPFlag("ping-very-insecure", rootCmd.Flags().Lookup("ping-very-insecure"))
 	viper.SetDefault("ping-very-insecure", false)
-	viper.BindPFlag("darkside-very-insecure", rootCmd.Flags().Lookup("darkside-very-insecure"))
-	viper.SetDefault("darkside-very-insecure", false)
-	viper.BindPFlag("darkside-timeout", rootCmd.Flags().Lookup("darkside-timeout"))
-	viper.SetDefault("darkside-timeout", 30)
+	// viper.BindPFlag("darkside-very-insecure", rootCmd.Flags().Lookup("darkside-very-insecure"))
+	// viper.SetDefault("darkside-very-insecure", false)
+	// viper.BindPFlag("darkside-timeout", rootCmd.Flags().Lookup("darkside-timeout"))
+	// viper.SetDefault("darkside-timeout", 30)
 
 	logger.SetFormatter(&logrus.TextFormatter{
 		//DisableColors:          true,
