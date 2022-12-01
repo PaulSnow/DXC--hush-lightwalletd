@@ -12,6 +12,12 @@ if ! [ -x "$(command -v go)" ]; then
   exit 1
 fi
 
+GO_VERSION=`go version | { read _ _ v _; echo ${v#go}; }`
+GO_VERSION_MAJOR=$(echo $GO_VERSION | cut -d. -f1)
+GO_VERSION_MINOR=$(echo $GO_VERSION | cut -d. -f2)
+GO_MIN_VERSION=1.17
+
+
 echo ""
 echo "Welcome to the Hush magic folks..."
 echo ""
@@ -21,6 +27,13 @@ echo "| :/\: || (\/) || :/\: || :/\: || :/\: || :/\: || (\/) || :/\: || :/\: || 
 echo "| (__) || :\/: || :\/: || (__) || (__) || :\/: || :\/: || (__) || (__) || :\/: || (__) || (__) |"
 echo "| '--'L|| '--'I|| '--'G|| '--'H|| '--'T|| '--'W|| '--'A|| '--'L|| '--'L|| '--'E|| '--'T|| '--'D|"
 echo "+------'+------'+------'+------'+------'+------'+------'+------'+------'+------'+------'+------'"
+echo ""
+echo "Building with Go v$GO_VERSION"
+
+if [[ $GO_VERSION_MAJOR -lt 1 ]] || [[ $GO_VERSION_MINOR -lt 17 ]]; then
+    echo "Go v$GO_VERSION is too old to build, please upgrade to at least v$GO_MIN_VERSION"
+    exit 1
+fi
 
 # now to compiling...
 echo ""
