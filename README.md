@@ -78,9 +78,10 @@ server {
     ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
         
     location / {
-        # Replace localhost:9067 with the address and port of your gRPC server if using a custom port
-        # Hush Smart Chains should use a different port than 9067 so it doesn't conflict with HUSH lightwalletd 
-    	grpc_pass grpc://your_host.net:9067;
+        # Replace 9067 with the port of your gRPC server if using a custom port
+        # Hush Smart Chains should use a different port than 9067 so it doesn't conflict with HUSH lightwalletd
+        # NOTE: it's only safe to use --no-tls on lightwalletd if this is on localhost
+    	grpc_pass grpc://localhost:9067;
     }
 }
 ```
@@ -88,7 +89,7 @@ server {
 Then run the lightwalletd frontend with the following (Note: we use the "-no-tls" option as we are using NGINX as a reverse proxy and letting it handle the TLS authentication for us instead):
 
 ```
-./lightwalletd -bind-addr your_host.net:9067 -conf-file ~/.hush/HUSH3/HUSH3.conf -no-tls
+./lightwalletd -bind-addr localhost:9067 -conf-file ~/.hush/HUSH3/HUSH3.conf -no-tls
 ```
 
 ##### Option B: "Let's Encrypt" certificate just using lightwalletd without NGINX
