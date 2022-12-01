@@ -17,7 +17,7 @@ build:
 
 build-arm:
 	# Build binary for ARM architecture (aarch64)
-	./util/build_arm.sh
+	GOOS=linux GOARCH=arm64 ./util/build.sh
 
 protobuf:
 	# Generate protobuf shizzle
