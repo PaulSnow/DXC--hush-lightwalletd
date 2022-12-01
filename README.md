@@ -18,7 +18,8 @@ This version of lightwalletd extends lightwalletd and:
 ## Running your own SDL lightwalletd
 
 #### 0. First, install Go
-You will need Go >= 1.13 which you can download from the official [download page](https://golang.org/dl/) or install via your OS package manager.
+You will need Go >= 1.17 which you can download from the official [download page](https://golang.org/dl/) or install via your OS package manager.
+Most OS package managers will not have such a new version, but you might get lucky.
 
 This [installation](https://golang.org/doc/install) document shows how to do it on various OS's.
 
