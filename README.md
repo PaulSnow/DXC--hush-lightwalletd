@@ -95,6 +95,7 @@ Then run the lightwalletd frontend with the following:
 
 Note: we use the "--no-tls" option as we are using NGINX as a reverse proxy and letting it handle the TLS authentication for us instead. If you want to do TLS directly with lightwalletd with no reverse proxy, see the next section.
 
+If you encounter an error about the lightwalletd "data directory", then set one on the command line with `--data-dir` (OR) create the `/var/lib/lightwalletd` and `/var/lib/lightwalletd/db` directories & chown that new db directory as the user account running lightwalletd and hushd.
 
 ##### Option B: "Let's Encrypt" certificate just using lightwalletd without NGINX
 The other option is to configure lightwalletd to handle its own TLS authentication. Once you have a certificate that you want to use (from a certificate authority), pass the certificate to the frontend as follows:
@@ -127,6 +128,7 @@ These are some of the most used command line options for lightwalletd:
 | --tls-cert  | blank             | the path to a TLS certificate |
 | --tls-key   | blank             | the path to a TLS key file    |
 | --no-tls    | false             | Disable TLS, serve un-encrypted traffic |
+| --data-dir  | /var/lib/lightwalletd | Sets the lightwalletd data directory |
 | --log-file  | blank             | log file to write to                  |
 | --log-level | logrus.InfoLevel | log level 1 thru 7 (something from logrus)|
 | --hush-conf-path | blank             | conf file to pull RPC creds from |
