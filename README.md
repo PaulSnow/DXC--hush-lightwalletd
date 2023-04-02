@@ -133,6 +133,7 @@ These are some of the most used command line options for lightwalletd:
 | --log-level | logrus.InfoLevel | log level 1 thru 7 (something from logrus)|
 | --hush-conf-path | blank             | conf file to pull RPC creds from |
 | --cache-size| 40000             | number of blocks to hold in the cache |
+| --rpcport   | 18031             | RPC port                         |
 
 
 Run `./lightwalletd --help` to see all options.
