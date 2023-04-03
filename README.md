@@ -117,6 +117,8 @@ cargo build --release
 
 * If you have trouble compiling silentdragonlite-cli, then [please refer to it's separate documentation here](https://git.hush.is/hush/silentdragonlite-cli) on how to build it and what pre-requisites need to be installed.
 
+You can also do testing with https://github.com/fullstorydev/grpcurl
+
 ## Running a server for Hush Smart Chains
 
 This lightwalletd code can be used with any Hush Smart Chain. For example, here is how you would
