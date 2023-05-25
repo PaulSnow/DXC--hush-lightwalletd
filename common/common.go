@@ -18,7 +18,7 @@ import (
 
 // TODO: 'make build' will overwrite this string with the output of git-describe (tag)
 var (
-	Version   = "v0.1.2"
+	Version   = "v0.1.3"
 	GitCommit = ""
 	Branch    = ""
 	BuildDate = ""
