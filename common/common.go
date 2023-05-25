@@ -199,7 +199,8 @@ func GetSaplingInfo() (int, int, string, string, int, int, int, error) {
 }
 
 func GetLightdInfo() (*walletrpc.LightdInfo, error) {
-	result, rpcErr := RawRequest("getinfo", []json.RawMessage{})
+	// result, rpcErr := RawRequest("getinfo", []json.RawMessage{})
+	result, rpcErr := CallRpcWithRetries("getinfo")
 	if rpcErr != nil {
 		return nil, rpcErr
 	}
@@ -209,7 +210,8 @@ func GetLightdInfo() (*walletrpc.LightdInfo, error) {
 		return nil, rpcErr
 	}
 
-	result, rpcErr = RawRequest("getblockchaininfo", []json.RawMessage{})
+	// result, rpcErr = RawRequest("getblockchaininfo", []json.RawMessage{})
+	result, rpcErr = CallRpcWithRetries("getblockchaininfo")
 	if rpcErr != nil {
 		return nil, rpcErr
 	}
@@ -301,6 +303,7 @@ func CallRpcWithRetries(method string) (json.RawMessage, error) {
 }
 
 func GetBlockChainInfo() (*HushdRpcReplyGetblockchaininfo, error) {
+    // we don't use CallRpcWithRetries here because the calling code does it already
 	result, rpcErr := RawRequest("getblockchaininfo", []json.RawMessage{})
 	if rpcErr != nil {
 		return nil, rpcErr
@@ -314,7 +317,8 @@ func GetBlockChainInfo() (*HushdRpcReplyGetblockchaininfo, error) {
 }
 
 func GetCoinsupply() (string, string, int, int, int, int, error) {
-	result1, rpcErr := RawRequest("coinsupply", []json.RawMessage{})
+	//result1, rpcErr := RawRequest("coinsupply", []json.RawMessage{})
+	result1, rpcErr := CallRpcWithRetries("coinsupply")
 
 	var err error
 	var errCode int64
