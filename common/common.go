@@ -260,7 +260,7 @@ func FirstRPC() {
 			break
 		}
 		retryCount++
-		if retryCount > 10 {
+		if retryCount > 20 {
 			Log.WithFields(logrus.Fields{
 				"timeouts": retryCount,
 			}).Fatal("unable to issue getblockchaininfo RPC call to hushd node")
