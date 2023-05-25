@@ -363,8 +363,7 @@ func getBlockFromRPC(height int) (*walletrpc.CompactBlock, error) {
 	}
 	params[0] = heightJSON
 	// Fetch the block using the verbose option ("1") because it provides
-	// both the list of txids, which we're not yet able to compute for
-	// Orchard (V5) transactions, and the block hash (block ID), which
+	// both the list of txids and the block hash (block ID), which
 	// we need to fetch the raw data format of the same block. Don't fetch
 	// by height in case a reorg occurs between the two getblock calls;
 	// using block hash ensures that we're fetching the same block.
