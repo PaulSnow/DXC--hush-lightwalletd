@@ -4,16 +4,16 @@
 package common
 
 import (
-	"encoding/hex"
-	"encoding/json"
-	"strconv"
-	"strings"
-	"time"
-
-	"git.hush.is/hush/lightwalletd/parser"
-	"git.hush.is/hush/lightwalletd/walletrpc"
-	"github.com/pkg/errors"
-	"github.com/sirupsen/logrus"
+    "fmt"
+    "encoding/hex"
+    "encoding/json"
+    "strconv"
+    "strings"
+    "time"
+    "git.hush.is/hush/lightwalletd/parser"
+    "git.hush.is/hush/lightwalletd/walletrpc"
+    "github.com/pkg/errors"
+    "github.com/sirupsen/logrus"
 )
 
 // TODO: 'make build' will overwrite this string with the output of git-describe (tag)
@@ -273,6 +273,32 @@ func FirstRPC() {
 	}
 }
 
+func CallRpcWithRetries(method string) (json.RawMessage, error) {
+    retryCount := 0
+    maxRetries := 50
+    for {
+        result, err := RawRequest(method, []json.RawMessage{})
+        if err == nil {
+            if retryCount > 0 {
+                Log.Warn(fmt.Sprintf("%s RPC successful"), method)
+            }
+            return result, err
+            break
+        }
+        retryCount++
+        if retryCount > maxRetries {
+            Log.WithFields(logrus.Fields{
+                "timeouts": retryCount,
+            }).Fatal(fmt.Sprintf("unable to issue %s RPC call to hushd node"), method)
+        }
+        Log.WithFields(logrus.Fields{
+            "error": err.Error(),
+            "retry": retryCount,
+        }).Warn(fmt.Sprintf("error with %s rpc, retrying..."), method)
+        Time.Sleep(time.Duration(10+retryCount*5) * time.Second) // backoff
+    }
+    return nil, nil
+}
 
 func GetBlockChainInfo() (*HushdRpcReplyGetblockchaininfo, error) {
 	result, rpcErr := RawRequest("getblockchaininfo", []json.RawMessage{})
@@ -435,7 +461,8 @@ func BlockIngestor(c *BlockCache, rep int) {
 		default:
 		}
 
-		result, err := RawRequest("getbestblockhash", []json.RawMessage{})
+		// result, err := RawRequest("getbestblockhash", []json.RawMessage{})
+		result, err := CallRpcWithRetries("getbestblockhash")
 		if err != nil {
 			Log.WithFields(logrus.Fields{
 				"error": err,
