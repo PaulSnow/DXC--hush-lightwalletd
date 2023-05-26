@@ -95,7 +95,7 @@ func (s *lwdStreamer) GetTaddressTxids(addressBlockFilter *walletrpc.Transparent
 		return err
 	}
 	params[0] = param
-	result, rpcErr := common.RawRequest("getaddresstxids", params)
+	result, rpcErr := common.CallRpcWithRetries("getaddresstxids", params)
 
 	// For some reason, the error responses are not JSON
 	if rpcErr != nil {
@@ -200,7 +200,7 @@ func (s *lwdStreamer) GetTransaction(ctx context.Context, txf *walletrpc.TxFilte
 			leHashStringJSON,
 			json.RawMessage("1"),
 		}
-		result, rpcErr := common.RawRequest("getrawtransaction", params)
+		result, rpcErr := common.CallRpcWithRetries("getrawtransaction", params)
 
 		// For some reason, the error responses are not JSON
 		if rpcErr != nil {
@@ -279,7 +279,7 @@ func (s *lwdStreamer) SendTransaction(ctx context.Context, rawtx *walletrpc.RawT
 		return &walletrpc.SendResponse{}, err
 	}
 	params[0] = txJSON
-	result, rpcErr := common.RawRequest("sendrawtransaction", params)
+	result, rpcErr := common.CallRpcWithRetries("sendrawtransaction", params)
 
 	var errCode int64
 	var errMsg string
@@ -325,7 +325,7 @@ func getTaddressBalanceHushdRpc(addressList []string) (*walletrpc.Balance, error
 	}
 	params[0] = param
 
-	result, rpcErr := common.RawRequest("getaddressbalance", params)
+	result, rpcErr := common.CallRpcWithRetries("getaddressbalance", params)
 	if rpcErr != nil {
 		return &walletrpc.Balance{}, rpcErr
 	}
@@ -353,7 +353,7 @@ func getAddressUtxos(arg *walletrpc.GetAddressUtxosArg, f func(*walletrpc.GetAdd
 		return err
 	}
 	params[0] = param
-	result, rpcErr := common.RawRequest("getaddressutxos", params)
+	result, rpcErr := common.CallRpcWithRetries("getaddressutxos", params)
 	if rpcErr != nil {
 		return rpcErr
 	}
@@ -431,7 +431,7 @@ func (s *lwdStreamer) GetMempoolStream(_empty *walletrpc.Empty, resp walletrpc.C
 var mempoolMap *map[string]*walletrpc.CompactTx
 var mempoolList []string
 
-// Last time we pulled a copy of the mempool from zcashd.
+// Last time we pulled a copy of the mempool from hushd
 var lastMempool time.Time
 
 func (s *lwdStreamer) GetMempoolTx(exclude *walletrpc.Exclude, resp walletrpc.CompactTxStreamer_GetMempoolTxServer) error {
@@ -442,7 +442,7 @@ func (s *lwdStreamer) GetMempoolTx(exclude *walletrpc.Exclude, resp walletrpc.Co
 		lastMempool = time.Now()
 		// Refresh our copy of the mempool.
 		params := make([]json.RawMessage, 0)
-		result, rpcErr := common.RawRequest("getrawmempool", params)
+		result, rpcErr := common.CallRpcWithRetries("getrawmempool", params)
 		if rpcErr != nil {
 			return rpcErr
 		}
@@ -467,7 +467,7 @@ func (s *lwdStreamer) GetMempoolTx(exclude *walletrpc.Exclude, resp walletrpc.Co
 			// The "0" is because we only need the raw hex, which is returned as
 			// just a hex string, and not even a json string (with quotes).
             params := []json.RawMessage{txidJSON, json.RawMessage("0")}
-            result, rpcErr := common.RawRequest("getrawtransaction", params)
+            result, rpcErr := common.CallRpcWithRetries("getrawtransaction", params)
 			if rpcErr != nil {
 				// Not an error; mempool transactions can disappear
 				continue
