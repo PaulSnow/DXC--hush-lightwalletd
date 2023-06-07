@@ -4,21 +4,21 @@
 package common
 
 import (
-	"encoding/hex"
-	"encoding/json"
-	"strconv"
-	"strings"
-	"time"
-
-	"git.hush.is/hush/lightwalletd/parser"
-	"git.hush.is/hush/lightwalletd/walletrpc"
-	"github.com/pkg/errors"
-	"github.com/sirupsen/logrus"
+    "fmt"
+    "encoding/hex"
+    "encoding/json"
+    "strconv"
+    "strings"
+    "time"
+    "git.hush.is/hush/lightwalletd/parser"
+    "git.hush.is/hush/lightwalletd/walletrpc"
+    "github.com/pkg/errors"
+    "github.com/sirupsen/logrus"
 )
 
 // TODO: 'make build' will overwrite this string with the output of git-describe (tag)
 var (
-	Version   = "v0.1.2"
+	Version   = "v0.1.3"
 	GitCommit = ""
 	Branch    = ""
 	BuildDate = ""
@@ -159,7 +159,7 @@ type (
 //TODO: this function is not currently used, but some of it's code
 // needs to be implemented elsewhere
 func GetSaplingInfo() (int, int, string, string, int, int, int, error) {
-	result, rpcErr := RawRequest("getblockchaininfo", []json.RawMessage{})
+	result, rpcErr := CallRpcWithRetries("getblockchaininfo", []json.RawMessage{})
 
 	var err error
 	var errCode int64
@@ -199,7 +199,8 @@ func GetSaplingInfo() (int, int, string, string, int, int, int, error) {
 }
 
 func GetLightdInfo() (*walletrpc.LightdInfo, error) {
-	result, rpcErr := RawRequest("getinfo", []json.RawMessage{})
+    params := []json.RawMessage{}
+    result, rpcErr := CallRpcWithRetries("getinfo", params)
 	if rpcErr != nil {
 		return nil, rpcErr
 	}
@@ -209,7 +210,8 @@ func GetLightdInfo() (*walletrpc.LightdInfo, error) {
 		return nil, rpcErr
 	}
 
-	result, rpcErr = RawRequest("getblockchaininfo", []json.RawMessage{})
+    params = []json.RawMessage{}
+    result, rpcErr = CallRpcWithRetries("getblockchaininfo", params)
 	if rpcErr != nil {
 		return nil, rpcErr
 	}
@@ -260,7 +262,7 @@ func FirstRPC() {
 			break
 		}
 		retryCount++
-		if retryCount > 10 {
+		if retryCount > 20 {
 			Log.WithFields(logrus.Fields{
 				"timeouts": retryCount,
 			}).Fatal("unable to issue getblockchaininfo RPC call to hushd node")
@@ -273,8 +275,36 @@ func FirstRPC() {
 	}
 }
 
+func CallRpcWithRetries(method string, params []json.RawMessage) (json.RawMessage, error) {
+    retryCount := 0
+    maxRetries := 50
+    for {
+        // params := []json.RawMessage{}
+        result, err := RawRequest(method, params)
+        if err == nil {
+            if retryCount > 0 {
+                Log.Warn(fmt.Sprintf("%s RPC successful"), method)
+            }
+            return result, err
+            break
+        }
+        retryCount++
+        if retryCount > maxRetries {
+            Log.WithFields(logrus.Fields{
+                "timeouts": retryCount,
+            }).Fatal(fmt.Sprintf("unable to issue %s RPC call to hushd node"), method)
+        }
+        Log.WithFields(logrus.Fields{
+            "error": err.Error(),
+            "retry": retryCount,
+        }).Warn(fmt.Sprintf("error with %s rpc, retrying..."), method)
+        Time.Sleep(time.Duration(10+retryCount*5) * time.Second) // backoff
+    }
+    return nil, nil
+}
 
 func GetBlockChainInfo() (*HushdRpcReplyGetblockchaininfo, error) {
+    // we don't use CallRpcWithRetries here because the calling code does it already
 	result, rpcErr := RawRequest("getblockchaininfo", []json.RawMessage{})
 	if rpcErr != nil {
 		return nil, rpcErr
@@ -288,7 +318,8 @@ func GetBlockChainInfo() (*HushdRpcReplyGetblockchaininfo, error) {
 }
 
 func GetCoinsupply() (string, string, int, int, int, int, error) {
-	result1, rpcErr := RawRequest("coinsupply", []json.RawMessage{})
+    params := []json.RawMessage{}
+	result1, rpcErr := CallRpcWithRetries("coinsupply", params)
 
 	var err error
 	var errCode int64
@@ -337,13 +368,12 @@ func getBlockFromRPC(height int) (*walletrpc.CompactBlock, error) {
 	}
 	params[0] = heightJSON
 	// Fetch the block using the verbose option ("1") because it provides
-	// both the list of txids, which we're not yet able to compute for
-	// Orchard (V5) transactions, and the block hash (block ID), which
+	// both the list of txids and the block hash (block ID), which
 	// we need to fetch the raw data format of the same block. Don't fetch
 	// by height in case a reorg occurs between the two getblock calls;
 	// using block hash ensures that we're fetching the same block.
 	params[1] = json.RawMessage("1")
-	result, rpcErr := RawRequest("getblock", params)
+	result, rpcErr := CallRpcWithRetries("getblock", params)
 	if rpcErr != nil {
 		// Check to see if we are requesting a height the hushd doesn't have yet
 		if (strings.Split(rpcErr.Error(), ":"))[0] == "-8" {
@@ -362,7 +392,7 @@ func getBlockFromRPC(height int) (*walletrpc.CompactBlock, error) {
 	}
 	params[0] = blockHash
 	params[1] = json.RawMessage("0") // non-verbose (raw hex)
-	result, rpcErr = RawRequest("getblock", params)
+	result, rpcErr = CallRpcWithRetries("getblock", params)
 
 	// For some reason, the error responses are not JSON
 	if rpcErr != nil {
@@ -435,7 +465,8 @@ func BlockIngestor(c *BlockCache, rep int) {
 		default:
 		}
 
-		result, err := RawRequest("getbestblockhash", []json.RawMessage{})
+        params := []json.RawMessage{}
+		result, err := CallRpcWithRetries("getbestblockhash", params)
 		if err != nil {
 			Log.WithFields(logrus.Fields{
 				"error": err,
