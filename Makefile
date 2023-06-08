@@ -1,4 +1,4 @@
-# Copyright (c) 2021 Jahway603 & The Hush Developers
+# Copyright (c) 2021-2023 Jahway603 & The Hush Developers
 # Released under the GPLv3
 #
 # Hush Lightwalletd Makefile
