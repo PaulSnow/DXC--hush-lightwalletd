@@ -95,6 +95,7 @@ Then run the lightwalletd frontend with the following:
 
 Note: we use the "--no-tls" option as we are using NGINX as a reverse proxy and letting it handle the TLS authentication for us instead. If you want to do TLS directly with lightwalletd with no reverse proxy, see the next section.
 
+If you encounter an error about the lightwalletd "data directory", then set one on the command line with `--data-dir` (OR) create the `/var/lib/lightwalletd` and `/var/lib/lightwalletd/db` directories & chown that new db directory as the user account running lightwalletd and hushd.
 
 ##### Option B: "Let's Encrypt" certificate just using lightwalletd without NGINX
 The other option is to configure lightwalletd to handle its own TLS authentication. Once you have a certificate that you want to use (from a certificate authority), pass the certificate to the frontend as follows:
@@ -116,6 +117,31 @@ cargo build --release
 
 * If you have trouble compiling silentdragonlite-cli, then [please refer to it's separate documentation here](https://git.hush.is/hush/silentdragonlite-cli) on how to build it and what pre-requisites need to be installed.
 
+You can also do testing with https://github.com/fullstorydev/grpcurl
+
+## Running a server for Hush Smart Chains
+
+This lightwalletd code can be used with any Hush Smart Chain. For example, here is how you would
+run the lightwalletd for DragonX :
+
+```
+./lightwalletd --grpc-bind-addr localhost:9069 --http-bind-addr localhost:9070 --hush-conf-path ~/.hush/DRAGONX/DRAGONX.conf --no-tls --rpcport=21769
+```
+
+For this code, your Nginx config will need to use the same GRPC port, so something like `grpc_pass grpc://localhost:9069;`
+
+The above code should be compatible with running a lightwalletd on the same server that runs one for Hush, which by default uses ports 9067 for grpc
+and 9068 for http. If you are only running a single lightwalletd on a server, the following should work for DragonX :
+
+```
+./lightwalletd --grpc-bind-addr localhost:9069 --http-bind-addr localhost:9070 --hush-conf-path ~/.hush/DRAGONX/DRAGONX.conf --no-tls --rpcport=21769
+```
+
+To run lightwalletd for other HSC's, you must specific the correct RPC port via `--rpcport` , point to it's config file via `--hush-conf-path` and
+use use unique ports that nothing else is using for `--grpc-bind-addr` and `--http-bind-addr` . Make sure your nginx config `grpc_pass` port matches
+what you give to `--grpc-bin-addr` .
+
+
 ## Lightwalletd Command-line Options
 
 These are some of the most used command line options for lightwalletd:
@@ -123,14 +149,17 @@ These are some of the most used command line options for lightwalletd:
 
 | CLI option | Default                   | What it does                  |
 |------------|:--------------:|------------------------------:|
-| --grpc-bind-addr | 127.0.0.1:9067 | address and port to listen on |
+| --grpc-bind-addr | 127.0.0.1:9067 | address and port to listen on via GRPC |
+| --http-bind-addr | 127.0.0.1:9068 | address and port to listen on vi HTTP |
 | --tls-cert  | blank             | the path to a TLS certificate |
 | --tls-key   | blank             | the path to a TLS key file    |
 | --no-tls    | false             | Disable TLS, serve un-encrypted traffic |
+| --data-dir  | /var/lib/lightwalletd | Sets the lightwalletd data directory |
 | --log-file  | blank             | log file to write to                  |
 | --log-level | logrus.InfoLevel | log level 1 thru 7 (something from logrus)|
 | --hush-conf-path | blank             | conf file to pull RPC creds from |
 | --cache-size| 40000             | number of blocks to hold in the cache |
+| --rpcport   | 18031             | RPC port                         |
 
 
 Run `./lightwalletd --help` to see all options.
