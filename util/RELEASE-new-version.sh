@@ -8,6 +8,8 @@
 #     ./util/RELEASE-new-version.sh 0.1.3
 # *** the above 0.1.3 is the version number you're building ***
 
+# *** Will ONLY work on a Debian system to create these Debian packages
+
 VERSION=$1
 readonly VERSION
 sed -i "s/0.1.3/$VERSION/g" util/build-debian-package.sh
