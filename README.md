@@ -184,4 +184,4 @@ GPLv3 or later
 
 # Copyright
 
-2016-2022 The Hush Developers
+2016-2023 The Hush Developers
