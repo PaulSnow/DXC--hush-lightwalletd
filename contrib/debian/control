@@ -2,8 +2,9 @@ Source: lightwalletd
 Section: utils
 Priority: optional
 Maintainer: Jahway603 <jahway603@protonmail.com>
+Build-Depends: go, libc6-dev
+Standards-Version: 4.0.0
 Homepage: https://hush.is
-Build-Depends: go
 Vcs-Git: https://git.hush.is/hush/lightwalletd.git
 Vcs-Browser: https://git.hush.is/hush/lightwalletd
 
