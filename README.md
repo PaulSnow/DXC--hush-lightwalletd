@@ -82,7 +82,10 @@ server {
         # Replace 9067 with the port of your gRPC server if using a custom port
         # Hush Smart Chains should use a different port than 9067 so it doesn't conflict with HUSH lightwalletd
         # NOTE: it's only safe to use --no-tls on lightwalletd if this is on localhost
-    	grpc_pass grpc://localhost:9067;
+        grpc_pass grpc://localhost:9067;
+        proxy_redirect off;
+        proxy_set_header Host $host;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
     }
 }
 ```
@@ -91,6 +94,13 @@ Then run the lightwalletd frontend with the following:
 
 ```
 ./start.sh
+```
+
+If you see the following error `"Can't create data directory: /var/lib/lightwalletd"` you need to set the correct user permissions:
+
+```
+sudo chown -R $USER:$USER /var/lib/lightwalletd
+sudo chmod -R 755 /var/lib/lightwalletd
 ```
 
 Note: we use the "--no-tls" option as we are using NGINX as a reverse proxy and letting it handle the TLS authentication for us instead. If you want to do TLS directly with lightwalletd with no reverse proxy, see the next section.
