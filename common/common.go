@@ -283,7 +283,7 @@ func CallRpcWithRetries(method string, params []json.RawMessage) (json.RawMessag
         result, err := RawRequest(method, params)
         if err == nil {
             if retryCount > 0 {
-                Log.Warn(fmt.Sprintf("%s RPC successful"), method)
+                Log.Warn(fmt.Sprintf("%s RPC successful", method))
             }
             return result, err
             break
@@ -292,7 +292,7 @@ func CallRpcWithRetries(method string, params []json.RawMessage) (json.RawMessag
         if retryCount > maxRetries {
             Log.WithFields(logrus.Fields{
                 "timeouts": retryCount,
-            }).Fatal(fmt.Sprintf("unable to issue %s RPC call to hushd node"), method)
+            }).Fatal(fmt.Sprintf("unable to issue %s RPC call to hushd node", method))
         }
         Log.WithFields(logrus.Fields{
             "error": err.Error(),

@@ -258,7 +258,7 @@ func (s *lwdStreamer) GetCoinsupply(ctx context.Context, in *walletrpc.Empty) (*
 	}, nil
 }
 
-// SendTransaction forwards raw transaction bytes to a zcashd instance over JSON-RPC
+// SendTransaction forwards raw transaction bytes to a full node over JSON-RPC
 func (s *lwdStreamer) SendTransaction(ctx context.Context, rawtx *walletrpc.RawTransaction) (*walletrpc.SendResponse, error) {
 	// sendrawtransaction "hexstring" ( allowhighfees )
 	//
