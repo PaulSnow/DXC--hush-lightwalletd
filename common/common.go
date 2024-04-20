@@ -289,15 +289,24 @@ func CallRpcWithRetries(method string, params []json.RawMessage) (json.RawMessag
             break
         }
         retryCount++
-        if retryCount > maxRetries {
+        if retryCount > maxRetries && method != "sendrawtransaction" {
             Log.WithFields(logrus.Fields{
                 "timeouts": retryCount,
             }).Fatal(fmt.Sprintf("unable to issue %s RPC call to hushd node", method))
         }
+        if retryCount > maxRetries && method == "sendrawtransaction" {
+            // TODO: it would be better to only give up if the error is an expired tx
+            Log.WithFields(logrus.Fields{
+                "error": err.Error(),
+                "retry": retryCount,
+            }).Warn(fmt.Sprintf("giving up on %s rpc", method))
+            // TODO: return a better error
+            return nil, nil
+        }
         Log.WithFields(logrus.Fields{
             "error": err.Error(),
             "retry": retryCount,
-        }).Warn(fmt.Sprintf("error with %s rpc, retrying..."), method)
+        }).Warn(fmt.Sprintf("error with %s rpc, retrying...", method))
         Time.Sleep(time.Duration(10+retryCount*5) * time.Second) // backoff
     }
     return nil, nil
