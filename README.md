@@ -157,7 +157,7 @@ what you give to `--grpc-bin-addr` .
 These are some of the most used command line options for lightwalletd:
 
 | CLI option       | Default        | What it does                  |
-|------------------|:--------------:|------------------------------:|
+|------------------|:--------------:|:------------------------------|
 | --grpc-bind-addr | 127.0.0.1:9067 | address and port to listen on via GRPC |
 | --http-bind-addr | 127.0.0.1:9068 | address and port to listen on vi HTTP |
 | --tls-cert       | blank          | the path to a TLS certificate |
