@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Copyright 2021-2023 Duke Leto and The Hush Developers
+# Copyright 2021-2024 Duke Leto and The Hush Developers
 # Distributed under the GPLv3 software license, see the accompanying
 # file LICENSE or https://www.gnu.org/licenses/gpl-3.0.en.html
 # Purpose: Script to build Hush lightwalletd on x86 64-bit arch

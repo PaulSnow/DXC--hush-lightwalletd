@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Copyright (c) 2021-2023 The Hush developers
+# Copyright (c) 2021-2024 The Hush developers
 # Distributed under the GPLv3 software license, see the accompanying
 # file LICENSE or https://www.gnu.org/licenses/gpl-3.0.en.html
 #

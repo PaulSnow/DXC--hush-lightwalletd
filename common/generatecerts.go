@@ -1,6 +1,6 @@
+// Copyright (c) 2019-2024 Duke Leto and The Hush developers
 // Copyright (c) 2019-2020 The Zcash developers
-// Distributed under the MIT software license, see the accompanying
-// file COPYING or https://www.opensource.org/licenses/mit-license.php .
+// Distributed under the GPLv3 software license
 package common
 
 import (
