@@ -336,7 +336,7 @@ func (p *action) ToCompact() *walletrpc.CompactOrchardAction {
 }
 */
 
-// Transaction encodes a full (zcashd) transaction.
+// Transaction encodes a full (hushd) transaction.
 type Transaction struct {
 	*rawTransaction
 	rawBytes []byte

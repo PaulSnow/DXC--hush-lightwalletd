@@ -49,7 +49,7 @@ var rootCmd = &cobra.Command{
 			TLSKeyPath:          viper.GetString("tls-key"),
 			LogLevel:            viper.GetUint64("log-level"),
 			LogFile:             viper.GetString("log-file"),
-			HushConfPath:       viper.GetString("hush-conf-path"),
+			HushConfPath:        viper.GetString("hush-conf-path"),
 			RPCUser:             viper.GetString("rpcuser"),
 			RPCPassword:         viper.GetString("rpcpassword"),
 			RPCHost:             viper.GetString("rpchost"),
@@ -204,7 +204,7 @@ func startServer(opts *common.Options) error {
 		// Indirect function for test mocking (so unit tests can talk to stub functions).
 		common.RawRequest = rpcClient.RawRequest
 
-		// Ensure that we can communicate with zcashd
+		// Ensure that we can communicate with hushd
 		common.FirstRPC()
 
 		getLightdInfo, err := common.GetLightdInfo()

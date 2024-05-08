@@ -174,8 +174,12 @@ Or do `make protobuf`
 
 To update the version of lightwalletd, update the value of the `Version` variable in common/common.go .
 
-## Support
-For support or other questions, join us on [Telegram](https://hush.is/telegram), or tweet at [@HushIsPrivacy](https://twitter.com/HushIsPrivacy), or toot at our [Mastodon](https://fosstodon.org/@myhushteam) or join [Telegram Support](https://hush.is/telegram_support).
+## Support and Socials
+
+* Telegram: [https://hush.is/tg](https://hush.is/tg)
+* Matrix: [https://hush.is/matrix](https://hush.is/matrix)
+* Twitter: [https://hush.is/twitter](https://hush.is/twitter)
+* PeerTube [https://hush.is/peertube](https://hush.is/peertube)
 
 ## License
 GPLv3 or later

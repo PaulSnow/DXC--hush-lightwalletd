@@ -6,9 +6,9 @@ package frontend
 import (
 	"net"
 
+	"git.hush.is/hush/lightwalletd/common"
 	"github.com/btcsuite/btcd/rpcclient"
 	"github.com/pkg/errors"
-	"git.hush.is/hush/lightwalletd/common"
 	ini "gopkg.in/ini.v1"
 )
 
@@ -26,15 +26,15 @@ func NewZRPCFromConf(confPath string) (*rpcclient.Client, error) {
 	return NewZRPCFromCreds(net.JoinHostPort(rpcaddr, rpcport), username, password)
 }
 
-// NewZRPCFromFlags gets zcashd rpc connection information from provided flags.
+// NewZRPCFromFlags gets hushd rpc connection information from provided flags.
 func NewZRPCFromFlags(opts *common.Options) (*rpcclient.Client, error) {
-	// Connect to local Zcash RPC server using HTTP POST mode.
+	// Connect to local Hush RPC server using HTTP POST mode.
 	connCfg := &rpcclient.ConnConfig{
 		Host:         net.JoinHostPort(opts.RPCHost, opts.RPCPort),
 		User:         opts.RPCUser,
 		Pass:         opts.RPCPassword,
-		HTTPPostMode: true, // Zcash only supports HTTP POST mode
-		DisableTLS:   true, // Zcash does not provide TLS by default
+		HTTPPostMode: true, // Hush only supports HTTP POST mode
+		DisableTLS:   true, // Hush does not provide TLS by default
 	}
 	return rpcclient.New(connCfg, nil)
 }

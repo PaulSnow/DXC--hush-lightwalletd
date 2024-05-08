@@ -43,10 +43,8 @@ fi
 # Architecture CLI option
 if [ "$1" = "--amd64" -o "$1" = "--a64" ]; then
   ARCH="amd64"
-  break
 elif [ "$1" = "--arm" -o "$1" = "--ARM" ]; then
   ARCH="aarch64"
-  break
 fi
 # Set Version-to-build from Second CLI option
 PACKAGE_VERSION=$2
