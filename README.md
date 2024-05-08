@@ -146,23 +146,21 @@ what you give to `--grpc-bin-addr` .
 
 These are some of the most used command line options for lightwalletd:
 
-
-| CLI option | Default                   | What it does                  |
-|------------|:--------------:|------------------------------:|
+| CLI option       | Default        | What it does                  |
+|------------------|:--------------:|------------------------------:|
 | --grpc-bind-addr | 127.0.0.1:9067 | address and port to listen on via GRPC |
 | --http-bind-addr | 127.0.0.1:9068 | address and port to listen on vi HTTP |
-| --tls-cert  | blank             | the path to a TLS certificate |
-| --tls-key   | blank             | the path to a TLS key file    |
-| --no-tls    | false             | Disable TLS, serve un-encrypted traffic |
-| --data-dir  | /var/lib/lightwalletd | Sets the lightwalletd data directory |
-| --log-file  | blank             | log file to write to                  |
-| --log-level | logrus.InfoLevel | log level 1 thru 7 (something from logrus)|
-| --hush-conf-path | blank             | conf file to pull RPC creds from |
-| --cache-size| 40000             | number of blocks to hold in the cache |
-| --rpcport   | 18031             | RPC port                         |
+| --tls-cert       | blank          | the path to a TLS certificate |
+| --tls-key        | blank          | the path to a TLS key file    |
+| --no-tls         | false          | Disable TLS, serve un-encrypted traffic |
+| --data-dir       | /var/lib/lightwalletd | Sets the lightwalletd data directory |
+| --log-file       | blank          | log file to write to          |
+| --log-level      | logrus.InfoLevel | log level 1 thru 7 (something from logrus) |
+| --hush-conf-path | blank          | conf file to pull RPC creds from |
+| --rpcport        | 18031          | RPC port                      |
+| version          | n/a            | Display lightwalletd version  |
 
-
-Run `./lightwalletd --help` to see all options.
+Run `./lightwalletd --help` or `./lightwalletd help` to see all options.
 
 ## Developing
 

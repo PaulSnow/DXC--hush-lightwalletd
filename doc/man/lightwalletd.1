@@ -1,4 +1,4 @@
-.TH LIGHTWALLET "1" "June 2023" "lightwalletd v0.1.3" "User Commands"
+.TH LIGHTWALLETD "1" "May 2024" "lightwalletd v0.1.3" "User Commands"
 .SH NAME
 lightwalletd \- manual page for hush lightwalletd v0.1.3
 .SH DESCRIPTION
@@ -12,60 +12,103 @@ please see <https://hush.is/security/>.
 .B lightwalletd [options]
 Start Hush lightwalletd
 .TP
-lightwalletd --help
+lightwalletd completion
+Generate the autocompletion script for the specified shell
+.TP
+lightwalletd help
 List available command line options
 .TP
-lightwalletd --version
+lightwalletd version
 Display version information
 .SH OPTIONS
 .HP
-\fB\-help | -h | -?
+\fB\--help | help | -h | -?
 .IP
 Display command line options
 .HP
-\fB\--hush-conf-path\fR [conf_file location]
+\fB\--config \fRstring
 .IP
-Configures your HUSH3.conf file location to pull RPC creds from (default "./HUSH3.conf")
+Configure your lightwalletd config file location (default is current directory, lightwalletd.yaml)
 .HP
-\fB\--data-dir\fR [location]
+\fB\--data-dir \fR [location]
 .IP
-Configures your lightwalletd data directory (such as db) (default "/var/lib/lightwalletd")
+Configure your lightwalletd data directory (such as db) (default "/var/lib/lightwalletd")
+.HP
+\fB\--gen-cert-very-insecure
+.IP
+Configure lightwalled to run with a self-signed TLS certificate. ONLY do this for debugging & DO NOT use in production!
 .HP
 \fB\--grpc-bind-addr \fRlocalhost:chosen_port
 .IP
-The address to listen for grpc on (default "localhost:9067")
+Configure the address and port to listen for grpc on (default "localhost:9067")
+.HP
+\fB\--grpc-logging-insecure
+.IP
+Configure lightwalled to enable grpc logging to stderr
+.HP
+\fB\--http-bind-addr \fRstring
+.IP
+Configure the address and port to listen for http on (default "localhost:9068")
+.HP
+\fB\--hush-conf-path\fR [conf_file location]
+.IP
+Configure your HUSH3.conf file location to pull RPC creds from (default "./HUSH3.conf")
+.HP
+\fB\--log-file \fRstring
+.IP
+Configure log file to write to (default "./server.log")
+.HP
+\fB\--log-level \fRint
+.IP
+Configure log level (logrus 1-7) (default 4)
 .HP
 \fB\--no-tls
 .IP
 Run without TLS, only safe if a reverse proxy like nginx does TLS on localhost.
 .HP
-\fB\--cache-size \fRint
+\fB\--ping-very-insecure
 .IP
-Set number of blocks to hold in the cache (default 40000)
+Configure lightwalled to allow Ping GRPC for testing.
 .HP
-\fB\--log-file \fRstring
+\fB\--redownload
 .IP
-Set log file to write to
+Re-fetch all blocks from hushd; reinitialize local cache files
 .HP
-\fB\--log-level \fRuint
+\fB\--rpchost \fRstring
 .IP
-log level (logrus 1-7) (default 4)
+Configure RPC host used.
+.HP
+\fB\--rpcpassword \fRstring
+.IP
+Configure RPC password used (default value used from HUSH3.conf)
+.HP
+\fB\--rpcport \fRstring
+.IP
+Configure RPC host port used (default value used from HUSH3.conf)
+.HP
+\fB\--rpcuser \fRstring
+.IP
+Configure RPC username used (default value used from HUSH3.conf)
+.HP
+\fB\--sync-from-height \fRint
+.IP
+Re-fetch blocks from hushd start at this height (default -1)
 .HP
 \fB\--tls-cert \fRstring
 .IP
-the path to a TLS certificate (optional)
+Configure the path to a TLS certificate (default "./cert.pem")
 .HP
 \fB\--tls-key \fRstring
 .IP
-the path to a TLS key file (optional)
+Configure the path to a TLS key file (default "./cert.key")
 
 .SH COPYRIGHT
 In order to ensure you are adequately protecting your privacy when using Hush,
 please see <https://hush.is/security/>.
 
-Copyright (C) 2021-2023 Jahway603 and The Hush Developers
+Copyright (C) 2021-2024 Jahway603 and The Hush Developers
 
 This is experimental Free Software! Fuck Yeah!!!!!
 
-Distributed under the GPLv3 software license, see the accompanying file COPYING
+Distributed under the GPLv3 software license, see the accompanying file LICENSE 
 or <https://www.gnu.org/licenses/gpl-3.0.en.html>.
