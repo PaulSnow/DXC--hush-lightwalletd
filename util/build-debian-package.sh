@@ -52,7 +52,7 @@ fi
 # Architecture CLI option
 if [ "$1" = "--amd64" -o "$1" = "--a64" ]; then
   ARCH="amd64"
-elif [ "$1" = "--arm" -o "$1" = "--ARM" ]; then
+elif [ "$1" = "--arm" -o "$1" = "--ARM" -o "$1" = "--aarch64" ]; then
   ARCH="aarch64"
 fi
 # Set Version-to-build from Second CLI option
