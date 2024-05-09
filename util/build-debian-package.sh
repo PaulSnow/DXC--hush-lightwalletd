@@ -29,6 +29,15 @@ fi
 # Check if lintian is installed and exit if it is not
 if ! [ -x "$(command -v lintian)" ]; then
   echo 'Error: lintian is not installed yet. Consult your Linux version package manager...' >&2
+  echo 'On Debian/Ubuntu, try "sudo apt install lintian"'
+  echo ""
+  exit 1
+fi
+
+# Check if fakeroot is installed and exit if it is not
+if ! [ -x "$(command -v fakeroot)" ]; then
+  echo 'Error: fakeroot is not installed yet. Consult your Linux version package manager...' >&2
+  echo 'On Debian/Ubuntu, try "sudo apt install fakeroot"'
   echo ""
   exit 1
 fi
