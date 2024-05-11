@@ -1,4 +1,4 @@
-lightwalletd (0.2.0) unstable; urgency=medium
+lightwalletd (0.2.0) unstable; urgency=high
 
   * Fixed logging error
   * Fixed issue with clients sending expired transactions
@@ -6,7 +6,7 @@ lightwalletd (0.2.0) unstable; urgency=medium
   * Updates to manpage to include all CLI options
   * Updates to Documentation
 
- -- Hush Core <jahway603@protonmail.com>  Wed, 08 May 2024 14:57:17 -0700
+ -- Hush Core <jahway603@protonmail.com>  Sat, 11 May 2024 09:44:17 -0700
 
 lightwalletd (0.1.3) unstable; urgency=medium
 
