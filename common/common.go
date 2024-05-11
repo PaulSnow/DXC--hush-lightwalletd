@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2023 Duke Leto and The Hush developers
+// Copyright (c) 2019-2024 Duke Leto and The Hush developers
 // Copyright (c) 2019-2020 The Zcash developers
 // Distributed under the GPLv3 software license
 package common
@@ -18,7 +18,7 @@ import (
 
 // TODO: 'make build' will overwrite this string with the output of git-describe (tag)
 var (
-	Version   = "v0.1.3"
+	Version   = "v0.2.0"
 	GitCommit = ""
 	Branch    = ""
 	BuildDate = ""
@@ -283,21 +283,30 @@ func CallRpcWithRetries(method string, params []json.RawMessage) (json.RawMessag
         result, err := RawRequest(method, params)
         if err == nil {
             if retryCount > 0 {
-                Log.Warn(fmt.Sprintf("%s RPC successful"), method)
+                Log.Warn(fmt.Sprintf("%s RPC successful", method))
             }
             return result, err
             break
         }
         retryCount++
-        if retryCount > maxRetries {
+        if retryCount > maxRetries && method != "sendrawtransaction" {
             Log.WithFields(logrus.Fields{
                 "timeouts": retryCount,
-            }).Fatal(fmt.Sprintf("unable to issue %s RPC call to hushd node"), method)
+            }).Fatal(fmt.Sprintf("unable to issue %s RPC call to hushd node", method))
+        }
+        if retryCount > maxRetries && method == "sendrawtransaction" {
+            // TODO: it would be better to only give up if the error is an expired tx
+            Log.WithFields(logrus.Fields{
+                "error": err.Error(),
+                "retry": retryCount,
+            }).Warn(fmt.Sprintf("giving up on %s rpc", method))
+            // TODO: return a better error
+            return nil, nil
         }
         Log.WithFields(logrus.Fields{
             "error": err.Error(),
             "retry": retryCount,
-        }).Warn(fmt.Sprintf("error with %s rpc, retrying..."), method)
+        }).Warn(fmt.Sprintf("error with %s rpc, retrying...", method))
         Time.Sleep(time.Duration(10+retryCount*5) * time.Second) // backoff
     }
     return nil, nil

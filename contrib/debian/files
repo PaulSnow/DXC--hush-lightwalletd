@@ -1,1 +1,4 @@
-lightwalletd_0.1.1_amd64.deb utils optional
+lightwalletd_0.1.3_amd64.deb utils optional
+lightwalletd_0.1.3_arm64.deb utils optional
+lightwalletd_0.2.0_amd64.deb utils optional
+lightwalletd_0.2.0_arm64.deb utils optional

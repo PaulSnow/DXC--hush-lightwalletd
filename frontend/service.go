@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2023 Duke Leto and The Hush developers
+// Copyright (c) 2019-2024 Duke Leto and The Hush developers
 // Copyright (c) 2019-2020 The Zcash developers
 // Distributed under the GPLv3 software license
 // Package frontend implements the gRPC handlers called by the wallets.
@@ -258,7 +258,7 @@ func (s *lwdStreamer) GetCoinsupply(ctx context.Context, in *walletrpc.Empty) (*
 	}, nil
 }
 
-// SendTransaction forwards raw transaction bytes to a zcashd instance over JSON-RPC
+// SendTransaction forwards raw transaction bytes to a full node over JSON-RPC
 func (s *lwdStreamer) SendTransaction(ctx context.Context, rawtx *walletrpc.RawTransaction) (*walletrpc.SendResponse, error) {
 	// sendrawtransaction "hexstring" ( allowhighfees )
 	//

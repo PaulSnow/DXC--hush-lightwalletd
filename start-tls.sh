@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Copyright 2020-2023 The Hush Developers
+# Copyright 2020-2024 The Hush Developers
 # Released under GPLv3
 
 # Description: This script would be used with a NGINX reverse proxy

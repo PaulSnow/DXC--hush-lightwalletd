@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2023 Duke Leto and The Hush developers
+// Copyright (c) 2019-2024 Duke Leto and The Hush developers
 // Copyright (c) 2019-2020 The Zcash developers
 // Distributed under the GPLv3 software license
 // Package parser deserializes (full) transactions from hushd
@@ -336,7 +336,7 @@ func (p *action) ToCompact() *walletrpc.CompactOrchardAction {
 }
 */
 
-// Transaction encodes a full (zcashd) transaction.
+// Transaction encodes a full (hushd) transaction.
 type Transaction struct {
 	*rawTransaction
 	rawBytes []byte

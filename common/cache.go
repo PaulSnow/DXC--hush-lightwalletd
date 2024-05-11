@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2023 Duke Leto and The Hush developers
+// Copyright (c) 2019-2024 Duke Leto and The Hush developers
 // Copyright (c) 2019-2020 The Zcash developers
 // Distributed under the GPLv3 software license
 // Package common contains utilities that are shared by other packages.
@@ -284,7 +284,7 @@ func (c *BlockCache) Add(height int, block *walletrpc.CompactBlock) error {
 	bheight := int(block.Height)
 
 	if bheight != height {
-		// This could only happen if zcashd returned the wrong
+		// This could only happen if hushd returned the wrong
 		// block (not the height we requested).
 		Log.Fatal("cache.Add wrong height: ", bheight, " expecting: ", height)
 		return nil

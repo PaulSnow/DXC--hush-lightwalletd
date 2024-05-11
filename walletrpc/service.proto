@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2023 Duke Leto and The Hush developers
+// Copyright (c) 2019-2024 Duke Leto and The Hush developers
 // Copyright (c) 2019-2020 The Zcash developers
 // Distributed under the GPLv3 software license
 syntax = "proto3";
@@ -128,9 +128,9 @@ service CompactTxStreamer {
     // Return a list of consecutive compact blocks
     rpc GetBlockRange(BlockRange) returns (stream CompactBlock) {}
 
-    // Return the requested full (not compact) transaction (as from zcashd)
+    // Return the requested full (not compact) transaction (as from hushd)
     rpc GetTransaction(TxFilter) returns (RawTransaction) {}
-    // Submit the given transaction to the Zcash network
+    // Submit the given transaction to the Hush network
     rpc SendTransaction(RawTransaction) returns (SendResponse) {}
 
     // Return the txids corresponding to the given t-address within the given block range

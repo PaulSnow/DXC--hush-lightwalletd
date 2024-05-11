@@ -2,12 +2,15 @@ Source: lightwalletd
 Section: utils
 Priority: optional
 Maintainer: Jahway603 <jahway603@protonmail.com>
+Build-Depends: go, libc6-dev
+Standards-Version: 4.0.0
 Homepage: https://hush.is
-Build-Depends: go
 Vcs-Git: https://git.hush.is/hush/lightwalletd.git
 Vcs-Browser: https://git.hush.is/hush/lightwalletd
 
 Package: lightwalletd
 Architecture: amd64 arm64
 Depends: ${shlibs:Depends}
-Description: Hush lightwallet daemon to run a Silent Dragon Lite server. Speak And Transact Freely. Hush inherits from Bitcoin Protocol and Zcash Protocol and is focused on private communications.
+Description: Hush lightwallet daemon to run a Silent Dragon Lite server.
+ Speak And Transact Freely with Hush, which inherits from Bitcoin Protocol and
+ Zcash Protocol and is focused on private communications.

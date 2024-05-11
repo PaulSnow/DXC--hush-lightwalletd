@@ -1,11 +1,22 @@
 #!/usr/bin/env bash
-# Copyright (c) 2021-2023 The Hush developers
+# Copyright (c) 2021-2024 The Hush developers
 # Distributed under the GPLv3 software license, see the accompanying
 # file LICENSE or https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-## Usage: ./util/build-debian-package.sh
+## USAGE
+#	./util/build-debian-package.sh <architecture flag> <version-you-are-building>
+#
+## 		Example to build debian pkg for amd64 (most common) for version 0.2.0:
+#			./util/build-debian-package.sh --amd64 0.2.0
+#
+## 		Example to build debian pkg for ARM (aarch64) for version 0.2.0:
+#			./util/build-debian-package.sh --arm 0.2.0
+#
+## USAGE Requirements:
+#	- Needs to be run in lightwalletd root directory 
+#	- Needs to be run on a Debian system (NOT UBUNTU)
 
-echo "Let's see who read the README.md or not..."
+echo "Let's see who read the USAGE EXAMPLES in this script or not..."
 echo ""
 
 # Check if lightwalletd is already built on system and exit if it is not
@@ -16,11 +27,36 @@ if ! [ -x "$(command -v ./lightwalletd)" ]; then
 fi
 
 # Check if lintian is installed and exit if it is not
-#if ! [ -x "$(command -v lintian)" ]; then
-#  echo 'Error: lintian is not installed yet. Consult your Linux version package manager...' >&2
-#  echo ""
-#  exit 1
-#fi
+if ! [ -x "$(command -v lintian)" ]; then
+  echo 'Error: lintian is not installed yet. Consult your Linux version package manager...' >&2
+  echo 'On Debian/Ubuntu, try "sudo apt install lintian"'
+  echo ""
+  exit 1
+fi
+
+# Check if fakeroot is installed and exit if it is not
+if ! [ -x "$(command -v fakeroot)" ]; then
+  echo 'Error: fakeroot is not installed yet. Consult your Linux version package manager...' >&2
+  echo 'On Debian/Ubuntu, try "sudo apt install fakeroot"'
+  echo ""
+  exit 1
+fi
+
+## Command line options section
+# Check if there are no CLI options entered and exit if so
+if [ -z "$1" ] || [ -z "$2" ]; then
+  echo 'YOU DOING IT WRONG...' >&2
+  echo 'Read the Usage Examples at top of this script & TRY AGAIN' >&2
+  exit 1
+fi
+# Architecture CLI option
+if [ "$1" = "--amd64" -o "$1" = "--a64" ]; then
+  ARCH="amd64"
+elif [ "$1" = "--arm" -o "$1" = "--ARM" -o "$1" = "--aarch64" ]; then
+  ARCH="aarch64"
+fi
+# Set Version-to-build from Second CLI option
+PACKAGE_VERSION=$2
 
 echo "Let There Be Hush Lightwalletd Debian Packages!"
 echo ""
@@ -38,7 +74,6 @@ PACKAGE_NAME="lightwalletd"
 SRC_PATH=`pwd`
 SRC_DEB=$SRC_PATH/contrib/debian
 SRC_DOC=$SRC_PATH/doc
-ARCH="amd64"
 
 umask 022
 
@@ -46,7 +81,6 @@ if [ ! -d $BUILD_PATH ]; then
     mkdir $BUILD_PATH
 fi
 
-PACKAGE_VERSION=0.1.3
 DEBVERSION=$(echo $PACKAGE_VERSION)
 BUILD_DIR="$BUILD_PATH/$PACKAGE_NAME-$PACKAGE_VERSION-$ARCH"
 
@@ -92,7 +126,5 @@ fakeroot dpkg-deb --build $BUILD_DIR
 cp $BUILD_PATH/$PACKAGE_NAME-$PACKAGE_VERSION-$ARCH.deb $SRC_PATH
 shasum -a 256 $SRC_PATH/$PACKAGE_NAME-$PACKAGE_VERSION-$ARCH.deb
 # Analyze with Lintian, reporting bugs and policy violations
-# Arch does not have lintian, as it's a Debian package, so commenting this out
-# To-DO - test on Debian/Ubuntu, create AUR lintian package
-#lintian -i $SRC_PATH/$PACKAGE_NAME-$PACKAGE_VERSION-$ARCH.deb
+lintian -i $SRC_PATH/$PACKAGE_NAME-$PACKAGE_VERSION-$ARCH.deb
 exit 0
