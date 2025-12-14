@@ -186,6 +186,63 @@ func (s *lwdStreamer) GetLatestTreeState(ctx context.Context, in *walletrpc.Empt
 	return s.GetTreeState(ctx, &walletrpc.BlockID{Height: uint64(latestHeight)})
 }
 
+// GetTreeState returns the note commitment tree state for a given block height
+func (s *lwdStreamer) GetTreeState(ctx context.Context, id *walletrpc.BlockID) (*walletrpc.TreeState, error) {
+	// Get the sapling tree from getblockmerkletree RPC
+	heightJSON, err := json.Marshal(strconv.FormatUint(id.Height, 10))
+	if err != nil {
+		return nil, err
+	}
+	params := []json.RawMessage{json.RawMessage(strconv.FormatUint(id.Height, 10))}
+
+	saplingTree, rpcErr := common.CallRpcWithRetries("getblockmerkletree", params)
+	if rpcErr != nil {
+		return nil, rpcErr
+	}
+	var saplingTreeStr string
+	if err := json.Unmarshal(saplingTree, &saplingTreeStr); err != nil {
+		return nil, err
+	}
+
+	// Get block hash
+	hashResult, rpcErr := common.CallRpcWithRetries("getblockhash", params)
+	if rpcErr != nil {
+		return nil, rpcErr
+	}
+	var blockHash string
+	if err := json.Unmarshal(hashResult, &blockHash); err != nil {
+		return nil, err
+	}
+
+	// Get block info for time
+	hashJSON, err := json.Marshal(blockHash)
+	if err != nil {
+		return nil, err
+	}
+	blockParams := []json.RawMessage{hashJSON}
+	blockResult, rpcErr := common.CallRpcWithRetries("getblock", blockParams)
+	if rpcErr != nil {
+		return nil, rpcErr
+	}
+
+	var blockInfo struct {
+		Time int64 `json:"time"`
+	}
+	if err := json.Unmarshal(blockResult, &blockInfo); err != nil {
+		return nil, err
+	}
+
+	_ = heightJSON // silence unused warning
+
+	return &walletrpc.TreeState{
+		Network:     s.chainName,
+		Height:      id.Height,
+		Hash:        blockHash,
+		Time:        uint32(blockInfo.Time),
+		SaplingTree: saplingTreeStr,
+	}, nil
+}
+
 // GetTransaction returns the raw transaction bytes that are returned by the 'getrawtransaction' RPC
 func (s *lwdStreamer) GetTransaction(ctx context.Context, txf *walletrpc.TxFilter) (*walletrpc.RawTransaction, error) {
 	if txf.Hash != nil {
